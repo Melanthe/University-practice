@@ -1,0 +1,12 @@
+$ git log
+commit 71fd9703d51dbcacedac540589e1f07173539dcb (HEAD -> master)
+Author: Yana Bernachkaya <yana.bernachkaya@gmail.com>
+Date:   Tue Feb 12 19:37:36 2019 +0300
+
+    add status.txt
+
+commit a1c770c8a59e7ec6bfcc8ce4f9531aa842ad0491
+Author: Yana Bernachkaya <yana.bernachkaya@gmail.com>
+Date:   Tue Feb 12 19:34:55 2019 +0300
+
+    add .gitignore
