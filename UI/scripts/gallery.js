@@ -2,32 +2,64 @@ let gallery = (function () {
 
     let posts = [];
 
-    function filterByAuthor(list, author) {
+    function isFilter(filter) {
 
-        if (Array.isArray(list) && (typeof(author) === 'string')) {
-            return list.filter(function (item) {
-                return (item.photo.author === author);
-            });
+        if (!(filter instanceof Filter)) {
+            console.log('Incorrect argument!');
+            return false;
+        }
+
+        if (filter.f_author !== '' || filter.f_hashtags.length !== 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function filterByAuthor(num, author) {
+
+        if (typeof (author) === 'string') {
+
+            let found = [];
+            let count = 0;
+
+            for (let i = 0; (i < posts.length) && (count < num); ++i) {
+                if (posts[i].photo.author === author) {
+                    found.push(posts[i]);
+                    count++;
+                }
+            }
+            return found;
+
         } else {
             console.log('Incorrect argument!');
             return undefined;
         }
     }
 
-    function filterByHashtags(list, hashtags) {
+    function filterByHashtags(num, hashtags) {
 
-        if (Array.isArray(list) && Array.isArray(hashtags)) {
+        if (Array.isArray(hashtags)) {
+
             let flag = true;
+            let found = [];
+            let count = 0;
 
-            return list.filter(function (item) {
+            for (let i = 0; (i < posts.length) && (count < num); ++i) {
                 flag = true;
-                hashtags.forEach(function (tag) {
-                    if (!item.hashtags.includes(tag)) {
+                for (let j = 0; j < hashtags.length; ++j) {
+                    if (!posts[i].hashtags.includes(hashtags[j])) {
                         flag = false;
+                        break;
                     }
-                });
-                return flag;
-            });
+                }
+                if (flag) {
+                    found.push(posts[i]);
+                    count++;
+                }
+            }
+            return found;
+
         } else {
             console.log('Incorrect argument!');
             return undefined;
@@ -41,8 +73,8 @@ let gallery = (function () {
             });
             return true;
         } else {
-           console.log('Incorrect argument!');
-           return false;
+            console.log('Incorrect argument!');
+            return false;
         }
     }
 
@@ -57,8 +89,8 @@ let gallery = (function () {
         if (array.length === 0) {
             return true;
         }
-        return array.every(function(item) {
-            return (typeof(item) === 'string');
+        return array.every(function (item) {
+            return (typeof (item) === 'string');
         });
     }
 
@@ -82,26 +114,35 @@ let gallery = (function () {
 
     function getPhotoPosts(skip = 0, top = 10, filterConfig = new Filter()) {
 
-        let result = posts.slice(skip, skip + top);
+        let result = [];
 
         if ((typeof (skip) !== 'number' || typeof (top) !== 'number')) {
             console.log('Incorrect arguments!');
             return undefined;
         }
-        if (!(filterConfig instanceof Filter) || !isStringArray(filterConfig.f_hashtags)) {
-            console.log('Incorrect filter configuration!');
-            return undefined;
+
+        if (isFilter(filterConfig)) {
+
+            if (!(filterConfig instanceof Filter) || !isStringArray(filterConfig.f_hashtags)) {
+                console.log('Incorrect filter configuration!');
+                return undefined;
+            }
+            if (filterConfig.f_author !== '') {
+                result = filterByAuthor(top + skip, filterConfig.f_author);
+            }
+            if (filterConfig.f_hashtags.length !== 0) {
+                result = filterByHashtags(top + skip, filterConfig.f_hashtags);
+            }
+            result = result.slice(skip);
+            
+        } else {
+            result = posts.slice(skip, skip + top);
         }
 
-        if (filterConfig.f_author !== '') {
-            result = filterByAuthor(result, filterConfig.f_author);
-        }
-        if (filterConfig.f_hashtags.length !== 0) {
-            result = filterByHashtags(result, filterConfig.f_hashtags);
-        }
         if (filterConfig.f_date === true) {
             sortByDate(result);
         }
+
 
         return result;
     }
@@ -232,7 +273,7 @@ console.log(gallery.addPhotoPost(new Post(new Photo('img/16.jpg', 'sasha'), '', 
 console.log(gallery.addPhotoPost(new Post(new Photo('img/17.jpg', 'vlad'), '', '17', [], new Date())));
 console.log(gallery.addPhotoPost(new Post(new Photo('img/18.jpg', 'yana'), 'magic', '18', [], new Date())));
 console.log(gallery.addPhotoPost(new Post(new Photo('img/19.jpg', 'yana'), 'doggy', '19', [], new Date())));
-console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'yana'), '', '20', [], new Date())));
+console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'yana'), '', '20', ['animals', 'cute'], new Date())));
 console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', ''), '', '20', [], new Date()))); //not author
 console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'tmp'), '', 5, [], new Date()))); //id not a string
 console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'tmp'), '', '5', [], new Date()))); //not unique id
@@ -253,6 +294,10 @@ console.log('\n');
 
 console.log('getter with author filter')
 console.log(gallery.getPhotoPosts(undefined, 20, new Filter('yana')));
+console.log('\n');
+
+console.log('getter with author filter skip 1 and top 2')
+console.log(gallery.getPhotoPosts(1, 2, new Filter('yana')));
 console.log('\n');
 
 console.log('getter with hashtag filter')
