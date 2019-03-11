@@ -112,7 +112,7 @@ let gallery = (function () {
         return valid;
     }
 
-    function getPhotoPosts(skip = 0, top = 10, filterConfig = new Filter()) {
+    function getPhotoPosts(skip = 0, top = 15, filterConfig = new Filter()) {
 
         let result = [];
 
@@ -134,7 +134,7 @@ let gallery = (function () {
                 result = filterByHashtags(top + skip, filterConfig.f_hashtags);
             }
             result = result.slice(skip);
-            
+
         } else {
             result = posts.slice(skip, skip + top);
         }
@@ -278,6 +278,7 @@ console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', ''), '', '20',
 console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'tmp'), '', 5, [], new Date()))); //id not a string
 console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'tmp'), '', '5', [], new Date()))); //not unique id
 console.log(gallery.addPhotoPost(new Post(new Photo('img/20.jpg', 'tmp'), '', '21', undefined, undefined, ['hello!'])));
+
 console.log('\n');
 
 console.log('default getter')
@@ -336,7 +337,20 @@ console.log(gallery.getPhotoPosts(0, 5));
 
 //test things
 
-let shown = 0;
+function likeOnClick(like) {
+
+    like.onclick = function () {
+        if (like.dataset.status === '0') {
+            like.dataset.status = '1';
+            like.firstChild.textContent = new String(parseInt(like.firstChild.textContent) + 1);
+            like.lastChild.style.color = '#FFE066';
+        } else {
+            like.dataset.status = '0';
+            like.firstChild.textContent = new String(parseInt(like.firstChild.textContent) - 1);
+            like.lastChild.style.color = '#D0D0D0';
+        }
+    }
+}
 
 function createImg(path) {
 
@@ -366,14 +380,17 @@ function createOverlay(author) {
     like.appendChild(tmp);
     tmp = document.createElement('button');
     tmp.className = 'heart';
+    let icon = document.createElement('i');
+    icon.className = 'fas fa-heart';
+    tmp.appendChild(icon);
     like.appendChild(tmp);
+    likeOnClick(like);
     overlay.appendChild(like);
 
     return overlay;
 }
 
 function loadMore() {
-
 
     gallery.getPhotoPosts(shown).forEach(function (item) {
 
@@ -391,24 +408,7 @@ function loadMore() {
     shown += 15;
 }
 
+let shown = 0;
+let loadMoreButton = document.getElementById('load-more');
+loadMoreButton.onclick = loadMore;
 loadMore();
-
-function like() {
-
-    let list = document.getElementsByClassName('like');
-
-    for (let i = 0; i < list.length; ++i) {
-
-        list[i].onclick = function () {
-            if (list[i].dataset.status === '0') {
-                list[i].dataset.status = '1';
-                list[i].firstChild.textContent = new String(parseInt(list[i].firstChild.textContent) + 1);
-            } else {
-                list[i].dataset.status = '0';
-                list[i].firstChild.textContent = new String(parseInt(list[i].firstChild.textContent) - 1);
-            }
-        };
-    }
-}
-
-like();

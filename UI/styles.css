@@ -64,6 +64,7 @@ main {
     color: white;
     font-size: 40px;
     text-shadow: 4px 5px 4px rgba(36, 123, 160, 1);
+    transition: .5s ease;
 }
 
 .header .user-bar a.sign:hover {
@@ -93,8 +94,8 @@ main {
     background: rgb(222, 238, 245);
     border-right: 5vw solid rgb(36, 123, 160);
     border-left: 5vw solid rgb(36, 123, 160);
-    border-top: 130px solid rgb(36, 123, 160);
-    padding: 5px;
+    border-top: 120px solid rgb(36, 123, 160);
+    padding: 6px;
     font-family: 'Abel';
 }
 
@@ -125,7 +126,7 @@ main {
     transition: .5s ease;
     opacity: 0;
     color: white;
-    font-size: 20px;
+    font-size: 1.2vw;
 }
 
 .photo .author{margin-left: 2%}
@@ -141,13 +142,15 @@ main {
 .heart {
     padding: 0;
     border: none;
-    background: url('icons/like_none.png');
-    background-size: cover;
+    outline:none;
+    background: none;
+    color: #D0D0D0;
+    transition: .3s ease;
+    font-size: 2vw;
 }
 
-
 .photo .heart {
-    width: 50%;
+    width: 56%;
     height: 80%;
 }
 
@@ -175,14 +178,14 @@ main {
     justify-content: space-between;
 }
 
-.popup-photo .pic {
+.popup-photos .pic {
     height: 100%;
     width: 43%;
     background: url('https://pp.userapi.com/c846521/v846521064/19b580/VT92Maa1svg.jpg');
     background-size: cover;
 }
 
-.popup-photo .info-box {
+.popup-photos .info-box {
     height: 100%;
     width: 53%;
     background: white;
@@ -190,7 +193,7 @@ main {
     position: relative;
 }
 
-.popup-photo .info-box .info-header {
+.popup-photos .info-box .info-header {
     position: absolute;
     top: 1%;
     left: 2.4%;
@@ -213,7 +216,7 @@ main {
     flex: 30%;
 }
 
-.popup-photo .header-buttons {
+.popup-photos .header-buttons {
     position: absolute;
     top: 1%;
     right: 2.4%;
@@ -224,18 +227,18 @@ main {
     align-items: center;   
 }
 
-.popup-photo .header-buttons .close {background: url('icons/close.png');}
-.popup-photo .header-buttons .edit {background: url('icons/edit_active.png');}
+.popup-photos .header-buttons .close {background: url('icons/close.png');}
+.popup-photos .header-buttons .edit {background: url('icons/edit_active.png');}
 
-.popup-photo .header-buttons .edit,
-.popup-photo .header-buttons .close {
+.popup-photos .header-buttons .edit,
+.popup-photos .header-buttons .close {
     height: 57%;
     width: 40%;
     border: none;
     background-size: cover;
 }
 
-.popup-photo .description {
+.popup-photos .description {
     position: absolute;
     top: 13%;
     left: 2%;
@@ -244,7 +247,7 @@ main {
     font-size: 1.2vw;
 }
 
-.popup-photo .hashtags {
+.popup-photos .hashtags {
     position: absolute;
     top: 30%;
     left: 2%;
@@ -254,7 +257,7 @@ main {
     color: #F25F5C;
 }
 
-.popup-photo .comments {
+.popup-photos .comments {
     position: absolute;
     top: 44%;
     left: 2%;
@@ -263,7 +266,7 @@ main {
     font-size: 1.2vw;
 }
 
-.popup-photo .comment .author {
+.popup-photos .comment .author {
     color: rgb(36, 123, 160);
     margin-right: 2%;
 }
@@ -293,6 +296,7 @@ main {
 }
 
 .popup-box .heart {
+    font-size: 2.2vw;
     height: 100%;
     width: 60%;
 }
@@ -316,6 +320,7 @@ main {
     cursor: pointer;
     margin-bottom: 7px;
     display: block;
+    transition: .6s ease;
 }
 
 .main-buttons .add-photo {
@@ -328,13 +333,14 @@ main {
     background-size: cover;
     opacity: 0.7;
     cursor: pointer;
+    transition: .6s ease;
 }
 
 .main-buttons .filter:hover, .main-buttons .add-photo:hover {
     opacity: 1;
 }
 
-.load-more {
+#load-more {
     background: rgb(143, 209, 198);
     font-family: 'Amatic SC';
     color: rgb(36, 123, 160);
@@ -345,14 +351,13 @@ main {
     border: none;
 }
 
-.load-more:hover {
+#load-more:hover {
     background: rgb(105, 201, 185);
 }
 
 .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
+    height: 50px;
     padding: 6px;
     overflow: hidden;
     margin: 0px;
@@ -363,9 +368,10 @@ main {
 .footer #contacts {
     display: flex;
     flex-direction: column;
-    justify-self: flex-start;
     font-family: 'Abel';
     font-weight: normal;
+    position: absolute;
+    left: 0.5%;
 }
 
 #creator {
@@ -375,17 +381,18 @@ main {
 .footer .logo {
     font-size: 40px;
     font-weight: bolder;
-    display: flex;
-    justify-content: center;
     margin-right: 5vw;
+    position: absolute;
+    left: 47.3%;
 }
 
 .footer .edit-date {
-    display: flex;
+    position: absolute;
+    top: 25%;
+    right: 0.5%;
     padding-top: 5px;
     font-family: 'Abel';
     font-weight: normal;
-    justify-content: flex-end;
 }
 
 @media (max-width: 800px) {
@@ -402,7 +409,7 @@ main {
         display: none;
     }
     .footer .logo {
-        width: 100%;
+        left: 42%;
         margin: 0px;
     }
 }
