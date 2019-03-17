@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
+
 //test of functions
-const posts = new PostList()
+const posts = new PostList();
 console.log('Check add: \n');
 console.log(posts.addPhotoPost(new Post(new Photo('img/1.jpg', 'yana'), 'lick', ['animals', 'cute'], new Date(), undefined, 54)));
 console.log(posts.addPhotoPost(new Post(new Photo('img/2.jpg', 'vova'), '', [], new Date(), ['yana'])));
@@ -30,31 +32,31 @@ console.log(posts.addPhotoPost(new Post(new Photo('img/20.jpg', 'tmp'), '', unde
 
 console.log('\n');
 
-console.log('default getter')
+console.log('default getter');
 console.log(posts.getPhotoPosts());
 console.log('\n');
 
-console.log('getter with incorrect argument')
+console.log('getter with incorrect argument');
 console.log(posts.getPhotoPosts('5'));
 console.log('\n');
 
-console.log('getter with skip 5 and top 3')
+console.log('getter with skip 5 and top 3');
 console.log(posts.getPhotoPosts(5, 3));
 console.log('\n');
 
-console.log('getter with author filter')
+console.log('getter with author filter');
 console.log(posts.getPhotoPosts(undefined, 20, new Filter('yana')));
 console.log('\n');
 
-console.log('getter with author filter skip 1 and top 2')
+console.log('getter with author filter skip 1 and top 2');
 console.log(posts.getPhotoPosts(1, 2, new Filter('yana')));
 console.log('\n');
 
-console.log('getter with hashtag filter')
+console.log('getter with hashtag filter');
 console.log(posts.getPhotoPosts(undefined, 20, new Filter(undefined, ['animals', 'cute'])));
 console.log('\n');
 
-console.log('getter with hashtag and author filter')
+console.log('getter with hashtag and author filter');
 console.log(posts.getPhotoPosts(undefined, 20, new Filter('yana', ['animals', 'cute'])));
 console.log('\n');
 
@@ -95,73 +97,73 @@ console.log(posts.addAllPosts(testPosts));
 
 function likeOnClick(like) {
 
-    like.onclick = function () {
-        if (like.dataset.status === '0') {
-            like.dataset.status = '1';
-            like.firstChild.textContent = new String(parseInt(like.firstChild.textContent) + 1);
-            like.lastChild.style.color = '#FFE066';
-        } else {
-            like.dataset.status = '0';
-            like.firstChild.textContent = new String(parseInt(like.firstChild.textContent) - 1);
-            like.lastChild.style.color = '#D0D0D0';
-        }
-    }
+	like.onclick = function () {
+		if (like.dataset.status === '0') {
+			like.dataset.status = '1';
+			like.firstChild.textContent = new String(parseInt(like.firstChild.textContent) + 1);
+			like.lastChild.style.color = '#FFE066';
+		} else {
+			like.dataset.status = '0';
+			like.firstChild.textContent = new String(parseInt(like.firstChild.textContent) - 1);
+			like.lastChild.style.color = '#D0D0D0';
+		}
+	};
 }
 
 function createImg(path) {
 
-    let pic = document.createElement('img');
-    pic.className = 'pic';
-    pic.src = path;
-    pic.alt = 'Invalid photo';
-    return pic;
+	let pic = document.createElement('img');
+	pic.className = 'pic';
+	pic.src = path;
+	pic.alt = 'Invalid photo';
+	return pic;
 }
 
 function createOverlay(author) {
 
-    let overlay = document.createElement('div');
-    overlay.className = 'overlay';
+	let overlay = document.createElement('div');
+	overlay.className = 'overlay';
 
-    let tmp = document.createElement('span');
-    tmp.className = 'author';
-    tmp.textContent = author;
-    overlay.appendChild(tmp);
+	let tmp = document.createElement('span');
+	tmp.className = 'author';
+	tmp.textContent = author;
+	overlay.appendChild(tmp);
 
-    let like = document.createElement('div');
-    like.className = 'like';
-    like.dataset.status = '0';
-    tmp = document.createElement('span');
-    tmp.className = 'numOfLikes';
-    tmp.textContent = '0';
-    like.appendChild(tmp);
-    tmp = document.createElement('button');
-    tmp.className = 'heart';
-    let icon = document.createElement('i');
-    icon.className = 'fas fa-heart';
-    tmp.appendChild(icon);
-    like.appendChild(tmp);
-    likeOnClick(like);
-    overlay.appendChild(like);
+	let like = document.createElement('div');
+	like.className = 'like';
+	like.dataset.status = '0';
+	tmp = document.createElement('span');
+	tmp.className = 'numOfLikes';
+	tmp.textContent = '0';
+	like.appendChild(tmp);
+	tmp = document.createElement('button');
+	tmp.className = 'heart';
+	let icon = document.createElement('i');
+	icon.className = 'fas fa-heart';
+	tmp.appendChild(icon);
+	like.appendChild(tmp);
+	likeOnClick(like);
+	overlay.appendChild(like);
 
-    return overlay;
+	return overlay;
 }
 
 function loadMore() {
 
-    posts.getPhotoPosts(shown).forEach(function (item) {
+	posts.getPhotoPosts(shown).forEach(function (item) {
 
-        let photos = document.getElementsByClassName('photos')[0];
+		let photos = document.getElementsByClassName('photos')[0];
 
-        let photo = document.createElement('div');
-        photo.className = 'photo';
+		let photo = document.createElement('div');
+		photo.className = 'photo';
 
-        photo.appendChild(createImg(item.photo.path));
-        photo.appendChild(createOverlay(item.photo.author));
+		photo.appendChild(createImg(item.photo.path));
+		photo.appendChild(createOverlay(item.photo.author));
 
-        photos.appendChild(photo);
-    });
+		photos.appendChild(photo);
+	});
 
-    shown += 15;
+	shown += 15;
 }
 
 let shown = 0;
