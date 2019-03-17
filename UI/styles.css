@@ -126,7 +126,7 @@ main {
     transition: .5s ease;
     opacity: 0;
     color: white;
-    font-size: 1.2vw;
+    font-size: 20px;
 }
 
 .photo .author{margin-left: 2%}
@@ -146,7 +146,10 @@ main {
     background: none;
     color: #D0D0D0;
     transition: .3s ease;
-    font-size: 2vw;
+}
+
+.photo .heart {
+    font-size: 40px;
 }
 
 .photo .heart {
