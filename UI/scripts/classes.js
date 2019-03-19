@@ -29,6 +29,7 @@ class Post {
 		this.date = date;
 		this.liked = liked;
 		this.hashtags = hashtags;
+		this.likes = 0;
 	}
 
 	validatePhotoPost() {

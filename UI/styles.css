@@ -85,7 +85,7 @@ main {
     color: rgb(36, 123, 160);
 }
 
-.photos {
+#photos {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -107,7 +107,7 @@ main {
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
 }
 
-.photo .pic {
+.pic {
     object-fit: cover;
     display: block;
     width: 100%;
@@ -162,7 +162,7 @@ main {
     height: 20%;
 }
 
-.popup-photos {
+#popup-photos {
     width: 100%;
     min-height: 100%;
     top: 0px;
@@ -181,14 +181,12 @@ main {
     justify-content: space-between;
 }
 
-.popup-photos .pic {
+#popup-photos .pic-box {
     height: 100%;
     width: 43%;
-    background: url('https://pp.userapi.com/c846521/v846521064/19b580/VT92Maa1svg.jpg');
-    background-size: cover;
 }
 
-.popup-photos .info-box {
+#popup-photos .info-box {
     height: 100%;
     width: 53%;
     background: white;
@@ -196,12 +194,12 @@ main {
     position: relative;
 }
 
-.popup-photos .info-box .info-header {
+#popup-photos .info-box .info-header {
     position: absolute;
     top: 1%;
     left: 2.4%;
     height: 10%;
-    width: 60%;
+    width: 70%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -210,16 +208,14 @@ main {
 .info-header .author {
     color: rgb(36, 123, 160);
     font-size: 2vw;
-    flex: 40%;
 }
 
-.info-header .date, .info-header .time {
+.info-header .date {
     color: #50514F;
     font-size: 1.3vw;
-    flex: 30%;
 }
 
-.popup-photos .header-buttons {
+#popup-photos .header-buttons {
     position: absolute;
     top: 1%;
     right: 2.4%;
@@ -230,27 +226,28 @@ main {
     align-items: center;   
 }
 
-.popup-photos .header-buttons .close {background: url('icons/close.png');}
-.popup-photos .header-buttons .edit {background: url('icons/edit_active.png');}
+#popup-photos .header-buttons .close {background: url('icons/close.png');}
+#popup-photos .header-buttons .edit {background: url('icons/edit_active.png');}
 
-.popup-photos .header-buttons .edit,
-.popup-photos .header-buttons .close {
+#popup-photos .header-buttons .edit,
+#popup-photos .header-buttons .close {
     height: 57%;
     width: 40%;
     border: none;
+    outline: none;
     background-size: cover;
 }
 
-.popup-photos .description {
+#popup-photos .description {
     position: absolute;
     top: 13%;
-    left: 2%;
+    left: 2.4%;
     height: 15%;
     width: 95%;
     font-size: 1.2vw;
 }
 
-.popup-photos .hashtags {
+#popup-photos .hashtags {
     position: absolute;
     top: 30%;
     left: 2%;
@@ -260,7 +257,7 @@ main {
     color: #F25F5C;
 }
 
-.popup-photos .comments {
+#popup-photos .comments {
     position: absolute;
     top: 44%;
     left: 2%;
@@ -269,7 +266,7 @@ main {
     font-size: 1.2vw;
 }
 
-.popup-photos .comment .author {
+#popup-photos .comment .author {
     color: rgb(36, 123, 160);
     margin-right: 2%;
 }
@@ -304,6 +301,11 @@ main {
     width: 60%;
 }
 
+.popup-box .numOfLikes {
+    color: #50514F;
+    font-size: 1.3vw;
+}
+
 .main-buttons {
     position: absolute;
     position: fixed;
@@ -311,11 +313,16 @@ main {
     left: 1%;
 }
 
-.main-buttons .filter {
+.main-buttons .filter, .main-buttons .add-photo {
     height: 80px;
     width: 80px;
     border: none;
+    outline: none;
     border-radius: 50%;
+
+}
+
+.main-buttons .filter {
     background-color: #F25F5C;
     background-image: url("icons\\filter.png");
     background-size: cover;
@@ -327,10 +334,6 @@ main {
 }
 
 .main-buttons .add-photo {
-    height: 80px;
-    width: 80px;
-    border: none;
-    border-radius: 50%;
     background-color: #F25F5C;
     background-image: url("icons\\photo.png");
     background-size: cover;
