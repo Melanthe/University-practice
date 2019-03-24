@@ -92,10 +92,11 @@ class PostList {
 
 	constructor(postsList = []) {
 		this._posts = postsList.slice();
+		this._authors = [];
 	}
 
 	_generateID() {
-		return ((new Date()).getTime());
+		return Date.now() + Math.round(Math.random() * 1000);
 	}
 
 	_filterByAuthor(num, author, posts) {
@@ -206,7 +207,11 @@ class PostList {
 
 		if (post.validatePhotoPost()) {
 			this._posts.push(post);
+			if (!this._authors.some((item) => (post.photo.author === item))) {
+				this._authors.push(post.photo.author);
+			}
 			return true;
+
 		} else {
 			return false;
 		}
@@ -252,20 +257,23 @@ class PostList {
 
 	removePhotoPost(id) {
 
-		let index = -1;
+		if (!this._ifExistID(id)) {
+			return false;
+		}
 
+		let index = -1;
 		for (let i = 0; i < this._posts.length; ++i) {
 			if (this._posts[i].id === id) {
 				index = i;
 			}
 		}
 
-		if (index == -1) {
-			return false;
-		}
-
 		this._posts.splice(index, 1);
 		return true;
+	}
+
+	getListOfAuthors() {
+		return this._authors;
 	}
 }
 
@@ -306,28 +314,25 @@ class OnClick {
 		loadMoreButton.onclick = function () {
 			gallery.getPhotoPosts(this._shown, undefined, this._curFilter).forEach((post) => {
 				viewer.showPost(post);
-			});	
+			});
 		};
 	}
 }
 
 class ViewGallery {
 
-	constructor(gallery = new PostList()) {
+	constructor() {
 		this._shown = 0;
-		this._gallery = gallery;
 		this._curFilter = new Filter();
 	}
 
-	incrementShown(number = 0) {
-
-		if ((typeof (number) !== 'number')) {
-			console.log('Incorrect arguments!');
-			return;
-		}
-		this._shown += number;
+	incrementShown() {
+		this._shown++;
 	}
 
+	decrementShown() {
+		this._shown--;
+	}
 	_createPost(item, container) {
 
 		let photo = document.createElement('div');
@@ -376,8 +381,7 @@ class ViewGallery {
 	_createPopupBox(item, container) {
 
 		let popupBox = document.createElement('div');
-		popupBox.className = 'popup-box';
-		popupBox.id = item.id;
+		popupBox.classList.add('popup-box');
 		popupBox.style.display = 'none';
 		popupBox.innerHTML = `
 		<div class='pic-box'>
@@ -413,6 +417,11 @@ class ViewGallery {
 
 	showPost(post) {
 
+		if (!(post instanceof Post) || !(post.validatePhotoPost())) {
+			console.log('Incorrect argument!');
+			return;
+		}
+
 		let photos = document.getElementById('photos');
 		this._createPost(post, photos);
 
@@ -423,9 +432,14 @@ class ViewGallery {
 		OnClick.openPopup(photos.lastChild.querySelector('.clickPlace'), popup.lastChild, popup);
 	}
 
-	showPhotoPosts(skip = 0, amount = 15) {
+	showPhotoPosts(gallery, skip = 0, amount = 15) {
 
-		this._gallery.getPhotoPosts(skip, amount, this._curFilter).forEach((post) => {
+		if (!(gallery instanceof PostList)) {
+			console.log('Incorrect argument!');
+			return;
+		}
+
+		gallery.getPhotoPosts(skip, amount, this._curFilter).forEach((post) => {
 			this.showPost(post);
 		});
 
@@ -433,8 +447,13 @@ class ViewGallery {
 	}
 
 	removePost(id = 0) {
+
 		let post = document.getElementById(id);
+		let index = Array.prototype.indexOf.call(post.parentNode.children, post);
 		post && post.remove();
+
+		let popup = document.getElementById('popup-photos').children[index];
+		popup && popup.remove();
 	}
 
 	loadMore() {
@@ -450,4 +469,94 @@ class ViewGallery {
 		}
 		this._curFilter = filter;
 	}
-}	
+
+	redrawPost(id, new_post) {
+
+		if (typeof (id) !== 'number' || !(new_post instanceof Post) || !(new_post.validatePhotoPost())) {
+			console.log('Incorrect argument!');
+			return;
+		}
+		let old_photo = document.getElementById(id);
+		let index = Array.prototype.indexOf.call(old_photo.parentNode.children, old_photo);
+		let old_popup = document.getElementById('popup-photos').children[index];
+
+		old_photo.firstElementChild.setAttribute('src', new_post.photo.path);
+		old_popup.querySelector('.pic').setAttribute('src', new_post.photo.path);
+		this._fillHashtags(new_post, old_popup);
+		old_popup.querySelector('.text').textContent = new_post.description;
+	}
+}
+
+class User {
+
+	constructor(name = '') {
+		if (name === '' || typeof (name) !== 'string') {
+			console.log('Incorrect argument!');
+			return;
+		}
+		this._name = name;
+		this._photoPath = '';
+		this._numOfPosts = 0;
+		this._likedPosts = [];
+	}
+
+	set userName(name = '') {
+		if (name === '' || typeof (name) !== 'string') {
+			console.log('Incorrect argument!');
+			return;
+		}
+		this._name = name;
+	}
+
+	set userPhoto(path = '') {
+		if (path === '' || typeof (path) !== 'string') {
+			console.log('Incorrect argument!');
+			return;
+		}
+		this._photoPath = path;
+	}
+
+	get userName() {
+		return this._name;
+	}
+
+	get userPhoto() {
+		return this._photoPath;
+	}
+}
+
+class ViewHeader {
+
+	static activeUser(user) {
+
+		if (!(user instanceof User)) {
+			console.log('Incorrect argument!');
+			return;
+		}
+
+		let parent = document.getElementsByClassName('user-bar')[0];
+		parent.innerHTML = `
+		<div id="sign">
+		<a id="sign-out">sign out</a>
+		</div>
+		<div class="user">
+			<img id="user-photo" src = "${user.userPhoto}" alt="Invalid photo">
+			<div id="user-nickname">${user.userName}</div>
+		</div>`;
+	}
+
+	static guest() {
+
+		let parent = document.getElementsByClassName('user-bar')[0];
+		parent.innerHTML = `
+		<div id="sign">
+		<a id="sign-in">sign in</a>
+		<a id="sign-up">sign up</a>
+		</div>
+		<div class="user">
+			<img id="user-photo" src = "img/guest.jpg" alt="Invalid photo">
+			<div id="user-nickname">guest</div>
+		</div>`;
+	}
+}
+

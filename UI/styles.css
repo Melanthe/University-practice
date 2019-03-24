@@ -56,18 +56,24 @@ main {
     align-content: center;
     justify-content: flex-end;
     margin-right: 20px;
-    width: 33%;
+    width: 40%;
 }
 
-.header .user-bar a.sign {
-    padding: 30px;
+#sign {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 20px;
+}
+
+#sign a {
     color: white;
     font-size: 40px;
     text-shadow: 4px 5px 4px rgba(36, 123, 160, 1);
     transition: .5s ease;
 }
 
-.header .user-bar a.sign:hover {
+#sign a:hover {
     cursor: pointer;
     text-shadow: none;
 }
