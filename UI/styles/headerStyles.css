@@ -1,0 +1,78 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 13%;
+    padding: 9px;
+    overflow: hidden;
+    margin: 0px;
+    background: #FFE066;
+    font-family: 'Amatic SC';
+    text-align: center;
+    text-transform: uppercase;
+    color: #247ba0;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.logo {
+    color: rgb(36, 123, 160);
+    text-transform: uppercase;
+    font-family: 'Amatic SC';
+}
+
+#help {
+    width: 33%;
+}
+
+.header a.logo {
+    font-size: 85px;
+    justify-self: center;
+    width: 33%;
+}
+
+.header .user-bar {
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+    width: 40%;
+}
+
+#header-sign {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 20px;
+}
+
+#header-sign a {
+    color: white;
+    font-size: 40px;
+    text-shadow: 4px 5px 4px rgba(36, 123, 160, 1);
+    transition: .5s ease;
+}
+
+#header-sign a:hover {
+    cursor: pointer;
+    text-shadow: none;
+}
+
+#user-photo {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#user-nickname {
+    font-size: 30px;
+    font-weight: normal;
+    color: rgb(36, 123, 160);
+}

@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+
 class ViewGallery {
 
 	constructor() {
@@ -12,6 +16,7 @@ class ViewGallery {
 	decrementShown() {
 		this._shown--;
 	}
+
 	_createPost(item, container) {
 
 		let photo = document.createElement('div');
@@ -28,7 +33,6 @@ class ViewGallery {
 			</div>
 		</div>`;
 		container.appendChild(photo);
-		OnClick.like(container.lastChild.querySelector('.like'), item);
 	}
 
 	_reformDate(date) {
@@ -72,26 +76,25 @@ class ViewGallery {
 				<div class='date'>${this._reformDate(item.date)}</div>
 			</div>
 			<div class='header-buttons'>
-				<button class='edit'></button>
-				<button class='close'></button>
+			<i class="fas fa-pen edit"></i>
+			<i class="far fa-times-circle close"></i>
 			</div>
 			<div class='description'>
 				<span class='text'>${item.description}</span>
 			</div>
 			<div class='hashtags'></div>
 			<div class='comments'></div>
-			<textarea id='add-comment' placeholder='Comment this photo...' maxlength='200' rows='2'></textarea>
+			<form id='add-comment'><textarea placeholder='Comment this photo...' maxlength='200' rows='2'></textarea></form>
 			<div class='like' data-status='0'>
 				<span class='numOfLikes'>${item.likes}</span>
 				<button class='heart'>
-					<i class='fas fa-heart'></i>
+					<i class='fas fa-heart like-button'></i>
 				</button>
 			</div>
-		</div>`;
+			<i class="fas fa-trash-alt delete"></i>
+			</div>`;
 		this._fillHashtags(item, popupBox);
 		container.appendChild(popupBox);
-		OnClick.like(container.lastChild.querySelector('.like'), item);
-		OnClick.exitPopup(popupBox.querySelector('.close'), popupBox, container);
 	}
 
 	showPost(post) {
@@ -107,8 +110,6 @@ class ViewGallery {
 		let popup = document.getElementById('popup-photos');
 		this._createPopupBox(post, popup);
 		popup.hidden = true;
-
-		OnClick.openPopup(photos.lastChild.querySelector('.clickPlace'), popup.lastChild, popup);
 	}
 
 	showPhotoPosts(gallery, skip = 0, amount = 15) {

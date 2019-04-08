@@ -5,51 +5,109 @@
 <body>
 
     <head>
-        <link rel="stylesheet" href="styles.css">
-        <link href="fonts/fonts.css" rel="stylesheet">
-        <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-        <meta charset="UTF-8">
+        <link rel='stylesheet' href='styles/mainStyles.css'>
+        <link rel='stylesheet' href='styles/headerStyles.css'>
+        <link rel='stylesheet' href='styles/photoStyles.css'>
+        <link rel='stylesheet' href='styles/popupStyles.css'>
+        <link rel='stylesheet' href='styles/mainButtonStyles.css'>
+        <link rel='stylesheet' href='styles/footerStyles.css'>
+        <link rel='stylesheet' href='styles/formStyles.css'>
+
+        <link href='fonts/fonts.css' rel='stylesheet'>
+        <script defer src='https://use.fontawesome.com/releases/v5.7.2/js/all.js'
+            integrity='sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP'
+            crossorigin='anonymous'></script>
+        <meta charset='UTF-8'>
     </head>
 
     <main>
 
-        <div class="header">
-            <div id="help"></div>
-            <a href="#" class="logo">moment</a>
-            <div class="user-bar hide"></div>
+        <div class='header'>
+            <div id='help'></div>
+            <a href='#' class='logo'>moment</a>
+            <div class='user-bar hide'></div>
         </div>
 
-        <div id="photos"></div> 
-        <div id="popup-photos" hidden></div>
+        <div id='photos'></div>
+        <div id='popup-photos' hidden></div>
 
-        <div class="main-buttons">
-            <button class="filter"></button>
-            <button class="add-photo"></button>
+        <div id='main-buttons'>
+            <div id='filter'>
+                <button id='filter-button' data-status='0'></button>
+                <div id='filter-fields' style='display: none'>
+                    <div id='author-filter'><img src='styles/icons/filter_author.png'></div>
+                    <div id='hashtag-filter'><img src='styles/icons/filter_hashtag.png'></div>
+                </div>
+            </div>
+            <button id='add-photo-button'></button>
         </div>
-        <button id="load-more"><span>LOAD MORE</span></button>
+
+        <div id='add-photo' hidden>
+            <form id='add-form'>
+                <div id='add-photo-box'>
+                    <div id='drop-pic-box'></div>
+                    <button id='choose-photo'>CHOOSE PHOTO</button>
+                    <textarea id='add-description' placeholder='Tell us a bit about your photo...'></textarea>
+                    <i id='close-add-form' class='far fa-times-circle close'></i>
+                    <i id='add-hashtag-button' class='fas fa-plus add'></i>
+                    <textarea id='add-hashtag' placeholder='Add a hashtag'></textarea>
+                    <div class='edit-hashtags'></div>
+                    <i id='add-form-ready' class='fas fa-check'></i>
+                </div>
+            </form>
+        </div>
+
+        <div id='search' hidden>
+            <div id='search-box'>
+                <span id='search-title'></span>
+                <form id='search-form'><textarea id='search-input-box'></textarea></form>
+                <i id='close-search' class='far fa-times-circle close'></i>
+            </div>
+        </div>
+
+        <div id='sign' hidden>
+            <div id='sign-box'>
+                <div class='help'><span id='sign-title'></span></div>
+                <form action='' id='sign-form'>
+                    <div class='login-box'>
+                        <label for='input-login' id='login-label'>LOGIN</label>
+                        <input id='input-login' type='text'>
+                    </div>
+                    <div class='password-box'>
+                        <label for='input-password' id='login-label'>PASSWORD</label>
+                        <input id='input-password' type='text'>
+                    </div>
+                    <input type='submit' id='submit-button' value='OK'> 
+                </form>
+                <i id='close-sign-form' class='far fa-times-circle close'></i>
+            </div>
+        </div>
+
+        <button id='load-more'><span>LOAD MORE</span></button>
 
     </main>
 
     <footer>
-        <div class="footer">
-            <div id="contacts">
-                <span id="creator">BERNACHKAYA YANA 2 COURSE 6 GROUP</span>
-                <span id="email">yana.bernachkaya@gmail.com</span>
+        <div class='footer'>
+            <div id='contacts'>
+                <span id='creator'>BERNACHKAYA YANA 2 COURSE 6 GROUP</span>
+                <span id='email'>yana.bernachkaya@gmail.com</span>
             </div>
-            <div class="logo"><span>moment</span></div>
-            <div class="edit-date hide"><span>LAST EDITING: 03.03.2019</span></div>
+            <div class='logo'><span>moment</span></div>
+            <div class='edit-date hide'><span>LAST EDITING: 03.03.2019</span></div>
         </div>
     </footer>
-    
-    <script src="scripts/photo.js"></script>
-    <script src="scripts/post.js"></script>
-    <script src="scripts/filter.js"></script>
-    <script src="scripts/postList.js"></script>
-    <script src="scripts/user.js"></script>
-    <script src="scripts/viewGallery.js"></script>
-    <script src="scripts/viewHeader.js"></script>
-    <script src="scripts/onClick.js"></script>
-    <script src='scripts/tests.js'></script>
+
+    <script src='scripts/photo.js'></script>
+    <script src='scripts/post.js'></script>
+    <script src='scripts/filter.js'></script>
+    <script src='scripts/postList.js'></script>
+    <script src='scripts/user.js'></script>
+    <script src='scripts/viewGallery.js'></script>
+    <script src='scripts/viewHeader.js'></script>
+    <script src='scripts/onClick.js'></script>
+    <script src='scripts/loadedEvent.js'></script>
+    <script src='scripts/controller.js'></script>
 </body>
 
 </html>

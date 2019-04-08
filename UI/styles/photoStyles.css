@@ -1,0 +1,85 @@
+#photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+    min-height: 100vh;
+    background: rgb(222, 238, 245);
+    border-right: 5vw solid rgb(36, 123, 160);
+    border-left: 5vw solid rgb(36, 123, 160);
+    border-top: 120px solid rgb(36, 123, 160);
+    padding: 6px;
+    font-family: 'Abel';
+}
+
+.photo {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 20px 2px -3px 2px;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pic {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.photo .overlay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    background: rgba(36, 123, 160, 0.6);
+    width: 100%;
+    height: 0;
+    transition: .5s ease;
+    opacity: 0;
+    color: white;
+    font-size: 20px;
+}
+
+.photo:hover .overlay {
+    opacity: 1;
+    height: 20%;
+}
+
+.photo .clickPlace {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    width: 100%;
+    height: 80%;
+}
+
+.photo .author{margin-left: 2%}
+
+.photo .like {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+}
+
+.heart {
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    outline:none;
+    background: none;
+    color: #D0D0D0;
+    transition: .3s ease;
+}
+
+.photo .heart {
+    font-size: 40px;
+}
+
+.photo .heart {
+    width: 56%;
+    height: 80%;
+}

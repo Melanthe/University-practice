@@ -1,0 +1,272 @@
+#add-photo {
+    width: 100%;
+    min-height: 100%;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+}
+
+#add-photo-box {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    height: 36vw;
+    width: 60%;
+    background: white;
+}
+
+#drop-pic-box {
+    position: absolute;
+    left: 2%;
+    top: 8%;
+    height: 68%;
+    width: 45%;
+    background: url('icons/drag_and_drop.png');
+    background-size: cover;
+}
+
+#choose-photo {
+    position: absolute;
+    border-radius: 100%;
+    bottom: 4%;
+    left: 19%;
+    width: 10%;
+    height: 17%;
+    border: none;
+    outline: none;
+    background: #274586a8;
+    font-family: 'Amatic SC';
+    font-size: 2vw;
+    color: #ffeca0;
+    cursor: pointer;
+}
+
+#choose-photo:active {
+    border: 1px solid rgb(74, 75, 73);
+    background: rgb(69, 93, 100);
+}
+
+#choose-photo:hover {
+    box-shadow: 0px 5px 4px rgba(250, 210, 52, 0.644);
+}
+
+#add-description {
+    position: absolute;
+    right: 2%;
+    top: 8%;
+    height: 30%;
+    width: 44%;
+    resize: none;
+    outline-color: #FFE066;
+    font-family: 'Abel';
+    color: rgb(74, 75, 73);
+    font-size: 1.2vw;
+    padding: 1%;
+}
+
+#add-description::selection {
+    background: #FFE066;
+}
+
+#add-photo .close {
+    position: absolute;
+    cursor: pointer;
+    top: 1%;
+    right: 2%;
+    height: 5%;
+    width: 3%;
+    color: #50514F;
+}
+
+#add-photo .close:hover {
+    color: #247ba0;
+}
+
+#add-hashtag-button {
+    position: absolute;
+    right: 45%;
+    top: 45%;
+    height: 5%;
+    width: 3%;
+    color: #50514F;
+    cursor: pointer;
+}
+
+#add-hashtag-button:hover {
+    color: #247ba0;
+}
+
+#add-hashtag {
+    position: absolute;
+    right: 32%;
+    top: 44%;
+    resize: none;
+    outline-color: #FFE066;
+    font-family: 'Abel';
+    color: rgb(74, 75, 73);
+    font-size: 0.9vw;
+    padding: 1%;
+    height: 3.2%;
+    width: 10%;
+    overflow: hidden;
+}
+
+#add-form-ready {
+    position: absolute;
+    bottom: 3%;
+    right: 1.5%;
+    height: 10%;
+    width: 8%;
+    color: #50514F;
+    cursor: pointer;
+}
+
+#add-form-ready:hover {
+    color: #70C1B3;
+}
+
+#search {
+    width: 100%;
+    min-height: 100%;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+}
+
+#search-box {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    height: 15vw;
+    width: 40%;
+    background: rgba(112, 193, 179, 0.8);
+}
+
+#search-title {
+    font-family: 'Amatic SC';
+    font-size: 4vw;
+    color: #115470;
+    position: absolute;
+    top: 10%;
+    left: 29%;
+}
+
+#search-input-box {
+    position: absolute;
+    background: rgba(112, 193, 179, 0.4);
+    border: 1.5px solid #115470;
+    left: 16%;
+    bottom: 20%;
+    height: 10%;
+    width: 65%;
+    resize: none;
+    outline-color: #FFE066;
+    font-family: 'Abel';
+    color: #115470;
+    font-size: 1.2vw;
+    padding: 1%;
+    overflow: hidden;
+}
+
+#close-search {
+    position: absolute;
+    width: 10%;
+    height: 15%;
+    right: 0;
+    top: 5%;
+}
+
+#close-search:hover {
+    color: #FFE066;
+}
+
+#sign {
+    width: 100%;
+    min-height: 100%;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+}
+
+#sign-box {
+    position: absolute;
+    top: 20%;
+    height: 70%;
+    width: 30%;
+    left: 35%;
+    background: white;
+    color: white;
+    font-family: 'Amatic SC';
+}
+
+#sign-box .help {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    background: #70C1B3;
+    width: 100%;
+}
+
+#sign-title {
+    font-size: 4vw;
+    color: #FFE066;
+}
+
+#input-login, #input-password {
+    background: #FFE066;
+    outline-color: #70C1B3;
+    border: 1px solid #50514F;
+    height: 4vh;
+    width: 60%;
+    font-family: 'Abel';
+    font-size: 1.2vw;
+    color: #3d3d3d;
+}
+
+.login-box, .password-box {
+    color: #50514F;
+    font-size: 3vw;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-box {
+    top: 20%;
+}
+
+.password-box {
+    top: 45%;
+}
+
+#submit-button {
+    position: absolute;
+    bottom: 10%;
+    left: 39%;
+    height: 20%;
+    width: 22%;
+    border-radius: 100%;
+    border: 1px solid #FFE066;
+    outline: none;
+    background: #70C1B3;
+    color: #3d3d3d;
+    font-family: 'Amatic SC';
+    font-size: 4vw;
+}
+
+#submit-button:hover {
+    box-shadow: 0px 5px 4px #F25F5C;
+}
+
+#close-sign-form {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    height: 5%;
+    width: 5%;
+}

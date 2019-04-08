@@ -1,0 +1,38 @@
+html {
+    min-width: 450px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 0px;
+    background-color: rgb(36, 123, 160);
+}
+
+@media (max-width: 800px) {
+    .user-bar.hide, .edit-date.hide, #contacts span {
+        display: none;
+    }
+    #help {
+        width: 0%;
+    }
+    .header a.logo {
+        width: 100%;
+    }
+    .footer #contacts {
+        display: none;
+    }
+    .footer .logo {
+        left: 42%;
+        margin: 0px;
+    }
+}
+
+@media (max-width: 450px) {
+    .header, .footer {
+        display: none;
+    }
+}

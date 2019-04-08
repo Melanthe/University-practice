@@ -68,3 +68,5 @@ function editPost(posts, viewer, id, new_post) {
 	viewer.redrawPost(id, new_post);
 	return true;
 }
+
+showPosts(posts, viewer);

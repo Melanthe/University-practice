@@ -1,0 +1,90 @@
+#main-buttons {
+    position: absolute;
+    position: fixed;
+    bottom: 30%;
+    left: 1%;
+}
+
+#main-buttons #filter-button, #main-buttons #add-photo-button {
+    height: 80px;
+    width: 80px;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+}
+
+#main-buttons #filter-button {
+    background-color: #F25F5C;
+    background-image: url("icons\\filter.png");
+    background-size: cover;
+    opacity: 0.7;
+    cursor: pointer;
+    margin-bottom: 7px;
+    display: block;
+    transition: .6s ease;
+}
+
+#main-buttons #add-photo-button {
+    background-color: #F25F5C;
+    background-image: url("icons\\photo.png");
+    background-size: cover;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: .6s ease;
+}
+
+#main-buttons #filter-button:hover, #main-buttons #add-photo-button:hover {
+    opacity: 1;
+}
+
+#filter {
+    display: flex;
+    justify-items: space-between;
+    align-items: center;
+}
+
+#filter-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+}
+
+#filter-fields img {
+    display: block;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: .6s ease;
+}
+
+#filter-fields img:hover {
+    opacity: 1;
+}
+
+#author-filter, #hashtag-filter {
+    margin: 2%;
+}
+
+#load-more {
+    background: rgb(143, 209, 198);
+    font-family: 'Amatic SC';
+    color: rgb(36, 123, 160);
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+}
+
+#load-more:hover {
+    background: rgb(105, 201, 185);
+}
+
+.close:active {
+    color: black;
+}
+
+.close:hover {
+    color: rgb(36, 123, 160);
+}
