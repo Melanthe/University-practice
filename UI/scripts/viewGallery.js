@@ -17,6 +17,14 @@ class ViewGallery {
 		this._shown--;
 	}
 
+	get currentFilter() {
+		return this._curFilter;
+	}
+
+	get numberOfShown() {
+		return this._shown;
+	}
+
 	_createPost(item, container) {
 
 		let photo = document.createElement('div');
@@ -134,11 +142,6 @@ class ViewGallery {
 
 		let popup = document.getElementById('popup-photos').children[index];
 		popup && popup.remove();
-	}
-
-	loadMore() {
-		OnClick.loadMore(this._gallery, this);
-		this._shown += 15;
 	}
 
 	setFilter(filter = new Filter()) {

@@ -75,6 +75,7 @@
     cursor: pointer;
     width: 100%;
     border: none;
+    outline: none;
 }
 
 #load-more:hover {

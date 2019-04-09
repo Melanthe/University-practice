@@ -170,6 +170,10 @@
     overflow: hidden;
 }
 
+#search-input-box:focus {
+    box-shadow: 0px 0px 10px #FFE066;
+}
+
 #close-search {
     position: absolute;
     width: 10%;
@@ -226,6 +230,10 @@
     color: #3d3d3d;
 }
 
+#input-login:focus, #input-password:focus {
+    box-shadow: 0px 0px 7px #115470;
+}
+
 .login-box, .password-box {
     color: #50514F;
     font-size: 3vw;
@@ -260,7 +268,7 @@
 }
 
 #submit-button:hover {
-    box-shadow: 0px 5px 4px #F25F5C;
+    box-shadow: 0px 8px 10px #247ba0;
 }
 
 #close-sign-form {

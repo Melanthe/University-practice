@@ -61,36 +61,35 @@ class OnClick {
 		popup.style.display = 'none';
 	}
 
-	static loadMore(gallery, viewer) {
-		let loadMoreButton = document.getElementById('load-more');
-		loadMoreButton.onclick = function () {
-			gallery.getPhotoPosts(this._shown, undefined, this._curFilter).forEach((post) => {
-				viewer.showPost(post);
-			});
-		};
+	static loadMore(button, gallery, viewer) {
+		gallery.getPhotoPosts(viewer.numberOfShown, undefined, viewer.currentFilter).forEach((post) => {
+			viewer.showPost(post);
+			viewer.incrementShown();
+		});
 	}
 
-	static displayUserButtons(user, photo)
-	{
+	static displayUserButtons(user, photo) {
 		let author = photo.querySelector('.author').textContent;
 		let popupBox = document.getElementById('popup-photos');
 		let index = Array.prototype.indexOf.call(photo.parentNode.children, photo);
 		let popup = popupBox.children[index];
 
-		if (user.userName === '' || user.userName !== author)
-		{
+		if (user.userName === '' || user.userName !== author) {
 			let edit = popup.querySelector('.edit');
 			console.log(edit);
 			let deleteButton = popup.querySelector('.delete');
 			edit.hidden = true;
 			deleteButton.hidden = true;
 		}
-		else if (user.userName === author)
-		{
+		else if (user.userName === author) {
 			let edit = popup.querySelector('.edit');
 			let deleteButton = popup.querySelector('.delete');
 			edit.hidden = false;
 			deleteButton.hidden = false;
 		}
+	}
+
+	static displayForm(node, status) {
+		node.hidden = status;
 	}
 }
