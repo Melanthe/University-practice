@@ -10,6 +10,8 @@
 				const id = +post.id;
 				let item = gallery.getPhotoPost(id);
 				OnClick.photoLike(event.target.closest('.like'), item);
+				item.likedPost(user.userName);
+				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts, currentFilter));
 			}
 		}
 	}
@@ -24,6 +26,8 @@
 				const id = +(photo.id);
 				let item = gallery.getPhotoPost(id);
 				OnClick.popupLike(event.target.closest('.like'), item, photo.querySelector('.like'));
+				item.likedPost(user.userName);
+				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts, currentFilter));
 			}
 		}
 	}
@@ -46,8 +50,12 @@
 		}
 	}
 
-	function showPosts(posts, galleryViewer, skip, amount) {
-		galleryViewer.showPhotoPosts(posts, skip, amount);
+	function showPosts(skip = 0, amount = gallery.numOfPosts) {
+
+		const postList = gallery.getPhotoPosts(skip, amount, currentFilter);
+		Storage.updatePostsList(postList);
+		galleryViewer.showPhotoPosts(postList, user.userName);
+
 	}
 
 	function displayUserButtons(event) {
@@ -136,9 +144,8 @@
 	}
 
 	function loadMoreButton(event) {
-		
-		if (event.target.id === 'load-more')
-		{
+
+		if (event.target.id === 'load-more') {
 			OnClick.loadMore(event.target, gallery, galleryViewer);
 		}
 	}
@@ -163,9 +170,12 @@
 	const photoContainer = document.getElementById('photos');
 	const popupContainer = document.getElementById('popup-photos');
 	const addPhotoForm = document.getElementById('add-photo');
-	const gallery = new PostList();
-	const galleryViewer = new ViewGallery();
-	const user = new User('yana');
+	const gallery = new PostList(Storage.getPostsList());
+	const currentFilter = new Filter();
+	const galleryViewer = new ViewGallery(currentFilter);
+	(!Storage.getUser()) && Storage.setUser(new User('yana'));
+	const user = Storage.getUser();
+
 	user.userPhoto = 'https://pp.userapi.com/c845221/v845221313/10fe34/q1LKzkYbEpM.jpg';
 
 	gallery.addPhotoPost(new Post(new Photo('img/1.jpg', 'yana'), 'Look! Omg! He is licking thi water so cool! I just can\'t! Ahhhhhhh', ['animals', 'cute'], new Date(), undefined, 54));
@@ -183,6 +193,5 @@
 	gallery.addPhotoPost(new Post(new Photo('img/13.jpg', 'kirill'), '', [], new Date()));
 
 	bind();
-	showPosts(gallery, galleryViewer);
-
+	showPosts(0, 15);
 })();

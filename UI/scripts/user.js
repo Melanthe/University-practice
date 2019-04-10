@@ -1,14 +1,27 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+
 class User {
 
-	constructor(name = '') {
+	constructor(name = '', photoPath = '', numOfPosts = 0) {
 		if (typeof (name) !== 'string') {
 			console.log('Incorrect argument!');
 			return;
 		}
 		this._name = name;
-		this._photoPath = 'img/guest.jpg';
-		this._numOfPosts = 0;
-		this._likedPosts = [];
+		this._photoPath = (photoPath === '') ? 'img/guest.jpg' : photoPath;
+		this._numOfPosts = numOfPosts;
+	}
+
+	static parseToUser(object) {
+		if (object) {
+			return (new User(
+				object._name,
+				object._photoPath,
+				object._numOfPosts
+			));
+		}
+		return undefined;
 	}
 
 	set userName(name = '') {
@@ -24,8 +37,7 @@ class User {
 			console.log('Incorrect argument!');
 			return;
 		}
-		if (this._name === '')
-		{
+		if (this._name === '') {
 			console.log('Invalid operation! There is no active user.');
 			return;
 		}

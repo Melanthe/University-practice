@@ -4,9 +4,9 @@
 
 class ViewGallery {
 
-	constructor() {
+	constructor(filter = new Filter()) {
 		this._shown = 0;
-		this._curFilter = new Filter();
+		this._curFilter = filter;
 	}
 
 	incrementShown() {
@@ -25,7 +25,7 @@ class ViewGallery {
 		return this._shown;
 	}
 
-	_createPost(item, container) {
+	_createPost(item, container, userName) {
 
 		let photo = document.createElement('div');
 		photo.classList.add('photo');
@@ -40,6 +40,11 @@ class ViewGallery {
 				<button class='heart'><i class='fas fa-heart'></i></button>
 			</div>
 		</div>`;
+		if ((userName !== '') && (item.ifLiked(userName))) {
+			let like = photo.querySelector('.like');
+			like.dataset.status = '1';
+			like.lastElementChild.style.color = '#FFE066';
+		}
 		container.appendChild(photo);
 	}
 
@@ -69,7 +74,7 @@ class ViewGallery {
 		});
 	}
 
-	_createPopupBox(item, container) {
+	_createPopupBox(item, container, userName) {
 
 		let popupBox = document.createElement('div');
 		popupBox.classList.add('popup-box');
@@ -102,10 +107,15 @@ class ViewGallery {
 			<i class="fas fa-trash-alt delete"></i>
 			</div>`;
 		this._fillHashtags(item, popupBox);
+		if ((userName !== '') && (item.ifLiked(userName))) {
+			let like = popupBox.querySelector('.like');
+			like.dataset.status = '1';
+			like.lastElementChild.style.color = '#FFE066';
+		}
 		container.appendChild(popupBox);
 	}
 
-	showPost(post) {
+	showPost(post, userName) {
 
 		if (!(post instanceof Post) || !(post.validatePhotoPost())) {
 			console.log('Incorrect argument!');
@@ -113,25 +123,18 @@ class ViewGallery {
 		}
 
 		let photos = document.getElementById('photos');
-		this._createPost(post, photos);
+		this._createPost(post, photos, userName);
 
 		let popup = document.getElementById('popup-photos');
-		this._createPopupBox(post, popup);
+		this._createPopupBox(post, popup, userName);
 		popup.hidden = true;
 	}
 
-	showPhotoPosts(gallery, skip = 0, amount = 15) {
-
-		if (!(gallery instanceof PostList)) {
-			console.log('Incorrect argument!');
-			return;
-		}
-
-		gallery.getPhotoPosts(skip, amount, this._curFilter).forEach((post) => {
-			this.showPost(post);
+	showPhotoPosts(postList, userName) {
+		postList.forEach((post) => {
+			this.showPost(post, userName);
+			this.incrementShown();
 		});
-
-		this._shown += (amount - skip);
 	}
 
 	removePost(id = 0) {
