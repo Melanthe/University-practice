@@ -12,6 +12,7 @@
         <link rel='stylesheet' href='styles/mainButtonStyles.css'>
         <link rel='stylesheet' href='styles/footerStyles.css'>
         <link rel='stylesheet' href='styles/formStyles.css'>
+        <link rel='stylesheet' href='styles/media.css'>
 
         <link href='fonts/fonts.css' rel='stylesheet'>
         <script defer src='https://use.fontawesome.com/releases/v5.7.2/js/all.js'
@@ -68,16 +69,17 @@
         <div id='sign' hidden>
             <div id='sign-box'>
                 <div class='help'><span id='sign-title'></span></div>
-                <form action='' id='sign-form'>
+                <form action='' id='sign-form' data-status=''>
                     <div class='login-box'>
                         <label for='input-login' id='login-label'>LOGIN</label>
-                        <input id='input-login' type='text'>
+                        <input id='input-login' type='text' value='' required>
                     </div>
                     <div class='password-box'>
                         <label for='input-password' id='login-label'>PASSWORD</label>
-                        <input id='input-password' type='text'>
+                        <input id='input-password' type='text' value='' required>
                     </div>
-                    <input type='submit' id='submit-button' value='OK'> 
+                    <div class='help'><input type='submit' id='submit-button' value='OK'></div>
+                    <div id='sign-error'></div>
                 </form>
                 <i id='close-sign-form' class='far fa-times-circle close'></i>
             </div>
@@ -103,6 +105,7 @@
     <script src='scripts/filter.js'></script>
     <script src='scripts/postList.js'></script>
     <script src='scripts/user.js'></script>
+    <script src='scripts/usersBase.js'></script>
     <script src='scripts/storage.js'></script>
     <script src='scripts/viewGallery.js'></script>
     <script src='scripts/viewHeader.js'></script>

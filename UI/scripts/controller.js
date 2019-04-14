@@ -108,6 +108,8 @@
 
 		if (event.target.id === 'sign-out') {
 			ViewHeader.guest();
+			Storage.setUser(new User());
+			location.reload();
 			return;
 		}
 
@@ -116,12 +118,48 @@
 
 		if (event.target.id === 'sign-up') {
 			titleNode.textContent = 'REGISTRATION';
+			form.querySelector('#sign-form').dataset.status = '0';
 			OnClick.displayForm(form, false);
 		}
 
 		if (event.target.id === 'sign-in') {
 			titleNode.textContent = 'SIGN IN';
+			form.querySelector('#sign-form').dataset.status = '1';
 			OnClick.displayForm(form, false);
+		}
+	}
+
+	function signFormsEvents(event) {
+
+		const status = document.getElementById('sign-form').dataset.status;
+		const loginForm = document.getElementById('input-login');
+		const passwordForm = document.getElementById('input-password');
+		let login = loginForm.value;
+		let password = passwordForm.value;
+		let user;
+
+		if (status === '0') {
+			if (!usersBase.checkUser(login)) {
+				user = new User(login, password);
+				usersBase.addUser(user);
+				Storage.updateUsersBase(usersBase.userList);
+				Storage.setUser(user);
+				location.reload();
+			} else {
+				event.preventDefault();
+				document.getElementById('sign-error').textContent = 'We have the such guy already :)';
+			}
+
+		} else if (status === '1') {
+			user = usersBase.getUser(login);
+			if (user && user.userPassword === password) {
+				Storage.setUser(user);
+				location.reload();
+			}
+			else {
+				event.preventDefault();
+				document.getElementById('sign-error').textContent = 'Incorrect login or password!';
+			}
 		}
 	}
 
@@ -139,6 +177,10 @@
 		}
 
 		if (targetNode.id === 'close-sign-form' || parent.id === 'close-sign-form') {
+			document.getElementById('sign-form').dataset.status = '';
+			document.getElementById('input-login').value = '';
+			document.getElementById('input-password').value = '';
+			document.getElementById('sign-error').textContent = '';
 			OnClick.displayForm(document.getElementById('sign'), true);
 		}
 	}
@@ -165,6 +207,7 @@
 		document.addEventListener('click', openFormsEvents);
 		document.addEventListener('click', signButtonsEvents);
 		document.addEventListener('click', loadMoreButton);
+		document.addEventListener('submit', signFormsEvents);
 	}
 
 	const photoContainer = document.getElementById('photos');
@@ -173,24 +216,24 @@
 	const gallery = new PostList(Storage.getPostsList());
 	const currentFilter = new Filter();
 	const galleryViewer = new ViewGallery(currentFilter);
-	(!Storage.getUser()) && Storage.setUser(new User('yana'));
+	const usersBase = new UsersBase(Storage.getUsersBase());
 	const user = Storage.getUser();
 
-	user.userPhoto = 'https://pp.userapi.com/c845221/v845221313/10fe34/q1LKzkYbEpM.jpg';
-
-	gallery.addPhotoPost(new Post(new Photo('img/1.jpg', 'yana'), 'Look! Omg! He is licking thi water so cool! I just can\'t! Ahhhhhhh', ['animals', 'cute'], new Date(), undefined, 54));
-	gallery.addPhotoPost(new Post(new Photo('img/2.jpg', 'vova'), '', [], new Date(), ['yana']));
-	gallery.addPhotoPost(new Post(new Photo('img/3.jpg', 'kolya'), 'sea', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/4.jpg', 'masha'), 'dragon', ['magic', 'cute'], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/5.jpg', 'misha'), '', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/6.jpg', 'katty'), '', ['animals', 'cute', 'cat'], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/7.jpg', 'alex'), '', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/8.jpg', 'vladimir'), '', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/9.jpg', 'angel'), 'flowers', [], new Date(), ['vova', 'sasha'], 64));
-	gallery.addPhotoPost(new Post(new Photo('img/10.jpg', 'maxime'), '', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/11.jpg', 'dasha'), 'tree', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/12.jpg', 'alina'), '', [], new Date()));
-	gallery.addPhotoPost(new Post(new Photo('img/13.jpg', 'kirill'), '', [], new Date()));
+	if (gallery.numOfPosts === 0) {
+		gallery.addPhotoPost(new Post(new Photo('img/1.jpg', 'yana'), 'Look! Omg! He is licking thi water so cool! I just can\'t! Ahhhhhhh', ['animals', 'cute'], new Date(), undefined, 54));
+		gallery.addPhotoPost(new Post(new Photo('img/2.jpg', 'vova'), '', [], new Date(), ['yana']));
+		gallery.addPhotoPost(new Post(new Photo('img/3.jpg', 'kolya'), 'sea', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/4.jpg', 'masha'), 'dragon', ['magic', 'cute'], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/5.jpg', 'misha'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/6.jpg', 'katty'), '', ['animals', 'cute', 'cat'], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/7.jpg', 'alex'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/8.jpg', 'vladimir'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/9.jpg', 'angel'), 'flowers', [], new Date(), ['vova', 'sasha'], 64));
+		gallery.addPhotoPost(new Post(new Photo('img/10.jpg', 'maxime'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/11.jpg', 'dasha'), 'tree', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/12.jpg', 'alina'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/13.jpg', 'kirill'), '', [], new Date()));
+	}
 
 	bind();
 	showPosts(0, 15);

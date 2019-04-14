@@ -1,0 +1,30 @@
+@media (max-width: 800px) {
+    .edit-date.hide, #contacts span {
+        display: none;
+    }
+    #help {
+        width: 0%;
+    }
+    .header a.logo {
+        width: 100%;
+    }
+    .footer #contacts {
+        display: none;
+    }
+    .footer .logo {
+        left: 42%;
+        margin: 0px;
+    }
+}
+
+@media (max-width: 800px) {
+    .user-bar.hide {
+        display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .header, .footer {
+        display: none;
+    }
+}

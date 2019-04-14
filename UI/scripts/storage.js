@@ -20,6 +20,23 @@ class Storage {
 		return postList;
 	}
 
+	static updateUsersBase(list) {
+		localStorage.setItem('usersBase', JSON.stringify(list));
+	}
+
+	static getUsersBase() {
+
+		let storageUsers = JSON.parse(localStorage.getItem('usersBase'));
+		let userList = [];
+
+		if (storageUsers) {
+			storageUsers.forEach((user) => {
+				userList.push(User.parseToUser(user));
+			});
+		}
+		return userList;
+	}
+
 	static setUser(user = new User()) {
 		localStorage.setItem('user', JSON.stringify(user));
 	}
@@ -29,6 +46,6 @@ class Storage {
 		if (user) {
 			return User.parseToUser(JSON.parse(user));
 		}
-		return undefined;
+		return (new User());
 	}
 }

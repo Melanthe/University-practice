@@ -3,7 +3,7 @@
 
 class User {
 
-	constructor(name = '', photoPath = '', numOfPosts = 0) {
+	constructor(name = '', password = '', photoPath = '', numOfPosts = 0) {
 		if (typeof (name) !== 'string') {
 			console.log('Incorrect argument!');
 			return;
@@ -11,12 +11,14 @@ class User {
 		this._name = name;
 		this._photoPath = (photoPath === '') ? 'img/guest.jpg' : photoPath;
 		this._numOfPosts = numOfPosts;
+		this._password = password;
 	}
 
 	static parseToUser(object) {
 		if (object) {
 			return (new User(
 				object._name,
+				object._password,
 				object._photoPath,
 				object._numOfPosts
 			));
@@ -50,5 +52,9 @@ class User {
 
 	get userPhoto() {
 		return this._photoPath;
+	}
+
+	get userPassword() {
+		return this._password;
 	}
 }
