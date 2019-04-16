@@ -291,3 +291,13 @@
     font-family: 'Amatic SC';
     font-size: 2vw;
 }
+
+#search-error {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 2%;
+    color: #FFE066;
+    font-family: 'Amatic SC';
+    font-size: 1.8vw;
+}

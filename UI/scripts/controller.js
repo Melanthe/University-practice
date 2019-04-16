@@ -53,9 +53,7 @@
 	function showPosts(skip = 0, amount = gallery.numOfPosts) {
 
 		const postList = gallery.getPhotoPosts(skip, amount, currentFilter);
-		Storage.updatePostsList(postList);
 		galleryViewer.showPhotoPosts(postList, user.userName);
-
 	}
 
 	function displayUserButtons(event) {
@@ -85,6 +83,7 @@
 			const titleNode = box.querySelector('#search-title');
 
 			titleNode.textContent = (parent.id === 'author-filter') ? 'Type an author' : 'Type a hashtag';
+			document.getElementById('search').dataset.status = (parent.id === 'author-filter') ? '0' : '1';
 			OnClick.displayForm(box, false);
 		}
 	}
@@ -163,6 +162,13 @@
 		}
 	}
 
+	function closeSearchForm() {
+		document.getElementById('search').hidden = true;
+		document.getElementById('search').dataset.status = '';
+		document.getElementById('search-input-box').value = '';
+		document.getElementById('search-error').textContent = '';
+	}
+
 	function closeFormsEvents(event) {
 
 		const targetNode = event.target;
@@ -173,7 +179,7 @@
 		}
 
 		if (targetNode.id === 'close-search' || parent.id === 'close-search') {
-			OnClick.displayForm(document.getElementById('search'), true);
+			closeSearchForm();
 		}
 
 		if (targetNode.id === 'close-sign-form' || parent.id === 'close-sign-form') {
@@ -185,10 +191,39 @@
 		}
 	}
 
+	function searchFormsEvents(event) {
+
+		const searchBox = document.getElementById('search');
+		const inputBox = document.getElementById('search-input-box');
+		const searchStatus = searchBox.dataset.status;
+		let data = '';
+
+		event.preventDefault();
+		data = inputBox.value.trim();
+		if (data.includes(' ')) {
+			document.getElementById('search-error').textContent = 'Incorrect input!';
+			return false;
+		}
+
+		if (searchStatus === '0') {
+			currentFilter.f_author = data;	
+		} else {
+			currentFilter.f_hashtags.push(data);
+		}
+
+		galleryViewer.setFilter(currentFilter);
+		galleryViewer.refreshShown();
+		photoContainer.innerHTML = '';
+		popupContainer.innerHTML = '';
+		showPosts(0, 15);
+
+		closeSearchForm();
+	}
+
 	function loadMoreButton(event) {
 
 		if (event.target.id === 'load-more') {
-			OnClick.loadMore(event.target, gallery, galleryViewer);
+			OnClick.loadMore(gallery, galleryViewer);
 		}
 	}
 
@@ -207,7 +242,8 @@
 		document.addEventListener('click', openFormsEvents);
 		document.addEventListener('click', signButtonsEvents);
 		document.addEventListener('click', loadMoreButton);
-		document.addEventListener('submit', signFormsEvents);
+		document.getElementById('sign').addEventListener('submit', signFormsEvents);
+		document.getElementById('search').addEventListener('submit', searchFormsEvents);
 	}
 
 	const photoContainer = document.getElementById('photos');
@@ -229,9 +265,9 @@
 		gallery.addPhotoPost(new Post(new Photo('img/7.jpg', 'alex'), '', [], new Date()));
 		gallery.addPhotoPost(new Post(new Photo('img/8.jpg', 'vladimir'), '', [], new Date()));
 		gallery.addPhotoPost(new Post(new Photo('img/9.jpg', 'angel'), 'flowers', [], new Date(), ['vova', 'sasha'], 64));
-		gallery.addPhotoPost(new Post(new Photo('img/10.jpg', 'maxime'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/10.jpg', 'yana'), '', [], new Date()));
 		gallery.addPhotoPost(new Post(new Photo('img/11.jpg', 'dasha'), 'tree', [], new Date()));
-		gallery.addPhotoPost(new Post(new Photo('img/12.jpg', 'alina'), '', [], new Date()));
+		gallery.addPhotoPost(new Post(new Photo('img/12.jpg', 'yana'), '', [], new Date()));
 		gallery.addPhotoPost(new Post(new Photo('img/13.jpg', 'kirill'), '', [], new Date()));
 	}
 

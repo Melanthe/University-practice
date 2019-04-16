@@ -17,6 +17,10 @@ class ViewGallery {
 		this._shown--;
 	}
 
+	refreshShown() {
+		this._shown = 0;
+	}
+
 	get currentFilter() {
 		return this._curFilter;
 	}

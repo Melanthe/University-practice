@@ -61,7 +61,7 @@ class OnClick {
 		popup.style.display = 'none';
 	}
 
-	static loadMore(button, gallery, viewer) {
+	static loadMore(gallery, viewer) {
 		gallery.getPhotoPosts(viewer.numberOfShown, undefined, viewer.currentFilter).forEach((post) => {
 			viewer.showPost(post);
 			viewer.incrementShown();

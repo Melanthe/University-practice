@@ -46,23 +46,24 @@
         <div id='add-photo' hidden>
             <form id='add-form'>
                 <div id='add-photo-box'>
-                    <div id='drop-pic-box'></div>
-                    <button id='choose-photo'>CHOOSE PHOTO</button>
+                    <div id='drop-pic-box'><img src=''></div>
+                    <button id='choose-photo' type='file'>CHOOSE PHOTO</button>
                     <textarea id='add-description' placeholder='Tell us a bit about your photo...'></textarea>
                     <i id='close-add-form' class='far fa-times-circle close'></i>
                     <i id='add-hashtag-button' class='fas fa-plus add'></i>
                     <textarea id='add-hashtag' placeholder='Add a hashtag'></textarea>
                     <div class='edit-hashtags'></div>
-                    <i id='add-form-ready' class='fas fa-check'></i>
+                    <button id='submit-add-form' type='submit'><i id='add-form-ready' class='fas fa-check'></i></button>
                 </div>
             </form>
         </div>
 
-        <div id='search' hidden>
+        <div id='search' data-status = '' hidden>
             <div id='search-box'>
                 <span id='search-title'></span>
-                <form id='search-form'><textarea id='search-input-box'></textarea></form>
+                <form id='search-form'><input id='search-input-box' required></form>
                 <i id='close-search' class='far fa-times-circle close'></i>
+                <div id="search-error"></div>
             </div>
         </div>
 
