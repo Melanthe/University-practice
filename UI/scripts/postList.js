@@ -70,7 +70,7 @@ class PostList {
 	_sortByDate(list) {
 
 		list.sort(function (x, y) {
-			return (x.date.getTime() - y.date.getTime());
+			return (y.date.getTime() - x.date.getTime());
 		});
 		return true;
 	}

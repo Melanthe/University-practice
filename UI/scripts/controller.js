@@ -4,12 +4,16 @@
 
 	function photoLike(event) {
 
-		if (event.target.tagName === 'path') {
+		const targetNode = event.target;
+
+		if (targetNode.tagName === 'path') {
 			if (user.userName !== '') {
-				const post = event.target.closest('.photo');
+
+				const post = targetNode.closest('.photo');
 				const id = +post.id;
 				let item = gallery.getPhotoPost(id);
-				OnClick.photoLike(event.target.closest('.like'), item);
+
+				OnClick.photoLike(targetNode.closest('.like'), item);
 				item.likedPost(user.userName);
 				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts, currentFilter));
 			}
@@ -18,16 +22,21 @@
 
 	function popupLike(event) {
 
-		if (event.target.classList.contains('like-button') || event.target.parentNode.classList.contains('like-button')) {
+		const targetNode = event.target;
+		const parent = targetNode.parentNode;
+
+		if (targetNode.classList.contains('like-button') || parent.classList.contains('like-button')) {
 			if (user.userName !== '') {
-				const popup = event.target.closest('.popup-box');
+
+				const popup = targetNode.closest('.popup-box');
 				const index = Array.prototype.indexOf.call(popup.parentNode.children, popup);
 				let photo = document.getElementById('photos').children[index];
 				const id = +(photo.id);
 				let item = gallery.getPhotoPost(id);
+
 				OnClick.popupLike(event.target.closest('.like'), item, photo.querySelector('.like'));
 				item.likedPost(user.userName);
-				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts, currentFilter));
+				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
 			}
 		}
 	}
@@ -36,31 +45,23 @@
 
 		if (event.target.className === 'clickPlace') {
 
-			let post = event.target.parentNode;
-			let popup = document.getElementById('popup-photos');
-			let index = Array.prototype.indexOf.call(post.parentNode.children, post);
+			const post = event.target.parentNode;
+			const popup = document.getElementById('popup-photos');
+			const index = Array.prototype.indexOf.call(post.parentNode.children, post);
+
 			OnClick.openPopup(popup.children[index], popup);
 		}
 	}
 
 	function exitPopup(event) {
-
 		if (event.target.classList.contains('close') || event.target.parentNode.classList.contains('close')) {
 			OnClick.exitPopup(event.target.closest('.popup-box'), event.target.closest('#popup-photos'));
 		}
 	}
 
 	function showPosts(skip = 0, amount = gallery.numOfPosts) {
-
 		const postList = gallery.getPhotoPosts(skip, amount, currentFilter);
 		galleryViewer.showPhotoPosts(postList, user.userName);
-	}
-
-	function displayUserButtons(event) {
-		if (event.target.className === 'clickPlace') {
-			let post = event.target.parentNode;
-			OnClick.displayUserButtons(user, post);
-		}
 	}
 
 	function userEvents() {
@@ -71,102 +72,37 @@
 	function openFormsEvents(event) {
 
 		if (event.target.id === 'add-photo-button') {
-			OnClick.displayForm(addPhotoForm, false);
-			return;
+			addPhotoForm.hidden = false;
 		}
-
-		const parent = event.target.parentNode;
-
-		if (parent.id === 'author-filter' || parent.id === 'hashtag-filter') {
-
-			const box = document.getElementById('search');
-			const titleNode = box.querySelector('#search-title');
-
-			titleNode.textContent = (parent.id === 'author-filter') ? 'Type an author' : 'Type a hashtag';
-			document.getElementById('search').dataset.status = (parent.id === 'author-filter') ? '0' : '1';
-			OnClick.displayForm(box, false);
+		if (event.target.parentNode.id === 'author-filter' || event.target.parentNode.id === 'hashtag-filter') {
+			OnClick.openSearchForm(event.target.parentNode);
 		}
 	}
 
 	function sideBarEvents(event) {
-
 		if (event.target.id === 'filter-button') {
-			if (event.target.dataset.status === '0') {
-				document.getElementById('filter-fields').style.display = '';
-				event.target.dataset.status = '1';
-			}
-			else {
-				document.getElementById('filter-fields').style.display = 'none';
-				event.target.dataset.status = '0';
-			}
+			OnClick.displaySideBar(event.target);
 		}
 	}
 
 	function signButtonsEvents(event) {
 
-
-		if (event.target.id === 'sign-out') {
-			ViewHeader.guest();
-			Storage.setUser(new User());
-			location.reload();
-			return;
-		}
-
 		const form = document.getElementById('sign');
 		const titleNode = form.querySelector('#sign-title');
 
 		if (event.target.id === 'sign-up') {
-			titleNode.textContent = 'REGISTRATION';
-			form.querySelector('#sign-form').dataset.status = '0';
-			OnClick.displayForm(form, false);
+			OnClick.signUp(titleNode, form);
 		}
-
 		if (event.target.id === 'sign-in') {
-			titleNode.textContent = 'SIGN IN';
-			form.querySelector('#sign-form').dataset.status = '1';
-			OnClick.displayForm(form, false);
+			OnClick.signIn(titleNode, form);
+		}
+		if (event.target.id === 'sign-out') {
+			OnClick.signOut();
 		}
 	}
 
 	function signFormsEvents(event) {
-
-		const status = document.getElementById('sign-form').dataset.status;
-		const loginForm = document.getElementById('input-login');
-		const passwordForm = document.getElementById('input-password');
-		let login = loginForm.value;
-		let password = passwordForm.value;
-		let user;
-
-		if (status === '0') {
-			if (!usersBase.checkUser(login)) {
-				user = new User(login, password);
-				usersBase.addUser(user);
-				Storage.updateUsersBase(usersBase.userList);
-				Storage.setUser(user);
-				location.reload();
-			} else {
-				event.preventDefault();
-				document.getElementById('sign-error').textContent = 'We have the such guy already :)';
-			}
-
-		} else if (status === '1') {
-			user = usersBase.getUser(login);
-			if (user && user.userPassword === password) {
-				Storage.setUser(user);
-				location.reload();
-			}
-			else {
-				event.preventDefault();
-				document.getElementById('sign-error').textContent = 'Incorrect login or password!';
-			}
-		}
-	}
-
-	function closeSearchForm() {
-		document.getElementById('search').hidden = true;
-		document.getElementById('search').dataset.status = '';
-		document.getElementById('search-input-box').value = '';
-		document.getElementById('search-error').textContent = '';
+		OnSubmit.submitSignForm(event, usersBase);
 	}
 
 	function closeFormsEvents(event) {
@@ -175,53 +111,81 @@
 		const parent = targetNode.parentNode;
 
 		if (targetNode.id === 'close-add-form' || parent.id === 'close-add-form') {
-			OnClick.displayForm(addPhotoForm, true);
+			OnClick.closeAddForm(addPhotoForm);
 		}
-
 		if (targetNode.id === 'close-search' || parent.id === 'close-search') {
-			closeSearchForm();
+			OnClick.closeSearchForm();
 		}
-
 		if (targetNode.id === 'close-sign-form' || parent.id === 'close-sign-form') {
-			document.getElementById('sign-form').dataset.status = '';
-			document.getElementById('input-login').value = '';
-			document.getElementById('input-password').value = '';
-			document.getElementById('sign-error').textContent = '';
-			OnClick.displayForm(document.getElementById('sign'), true);
+			OnClick.closeSignForm();
 		}
 	}
 
 	function searchFormsEvents(event) {
-
-		const searchBox = document.getElementById('search');
-		const inputBox = document.getElementById('search-input-box');
-		const searchStatus = searchBox.dataset.status;
-		let data = '';
-
-		event.preventDefault();
-		data = inputBox.value.trim();
-		if (data.includes(' ')) {
-			document.getElementById('search-error').textContent = 'Incorrect input!';
-			return false;
-		}
-
-		if (searchStatus === '0') {
-			currentFilter.f_author = data;	
-		} else {
-			currentFilter.f_hashtags.push(data);
-		}
-
-		galleryViewer.setFilter(currentFilter);
-		galleryViewer.refreshShown();
-		photoContainer.innerHTML = '';
-		popupContainer.innerHTML = '';
+		OnSubmit.submitSearchForm(event, currentFilter, galleryViewer, photoContainer, popupContainer);
 		showPosts(0, 15);
+		OnClick.closeSearchForm();
+	}
 
-		closeSearchForm();
+	function choosePhotoEvents(event) {
+		if (event.target.id === 'input-photo') {
+			const selectedFile = document.getElementById('input-photo').files[0];
+			const imgBox = document.getElementById('drop-pic-box').firstElementChild;
+			let filePath = URL.createObjectURL(selectedFile);
+			imgBox.src = filePath;
+		}
+	}
+
+	function dragEvent(event) {
+		event.stopPropagation();
+		event.preventDefault();
+	}
+
+	function dropEvent(event) {
+
+		event.stopPropagation();
+		event.preventDefault();
+
+		const imgBox = document.getElementById('drop-pic-box').firstElementChild;
+		let selectedFile = event.dataTransfer.files[0];
+		let filePath = URL.createObjectURL(selectedFile);
+		imgBox.src = filePath;
+	}
+
+	function inputHashtagEvent(event) {
+		if (event.keyCode === 13) {
+			OnClick.addHashtag(event, addPhotoForm);
+		}
+	}
+
+	function hashtagButtonEvent(event) {
+
+		const targetNode = event.target;
+		const parent = targetNode.parentNode;
+
+		if (targetNode.id === 'hashtag-button-font' || parent.id === 'hashtag-button-font') {
+			OnClick.addHashtag(event, addPhotoForm);
+		}
+		if (targetNode.classList.contains('fa-minus') || parent.classList.contains('fa-minus')) {
+			OnClick.removeTagBubble(targetNode);
+		}
+	}
+
+	function addSubmitClick(event) {
+		if (event.target.classList.contains('fa-check') || event.target.parentNode.classList.contains('fa-check')) {
+			OnClick.submitAddForm(addPhotoForm, user, gallery);
+		}
+	}
+
+	function deletePhotoEvent(event) {
+		if (event.target.classList.contains('delete') || event.target.parentNode.classList.contains('delete')) {
+			OnClick.deletePhoto(event.target.closest('.popup-box'), popupContainer, gallery);
+			Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
+			location.reload();
+		}
 	}
 
 	function loadMoreButton(event) {
-
 		if (event.target.id === 'load-more') {
 			OnClick.loadMore(gallery, galleryViewer);
 		}
@@ -229,12 +193,14 @@
 
 	function bind() {
 
+		const dropBox = document.getElementById('drop-pic-box');
+		const addPhoto = document.getElementById('add-photo');
+
 		photoContainer.addEventListener('click', photoLike);
 		photoContainer.addEventListener('click', openPopup);
-		photoContainer.addEventListener('click', displayUserButtons);
-
 		popupContainer.addEventListener('click', popupLike);
 		popupContainer.addEventListener('click', exitPopup);
+		popupContainer.addEventListener('click', deletePhotoEvent);
 
 		document.addEventListener('DOMContentLoaded', userEvents);
 		document.addEventListener('click', closeFormsEvents);
@@ -242,13 +208,23 @@
 		document.addEventListener('click', openFormsEvents);
 		document.addEventListener('click', signButtonsEvents);
 		document.addEventListener('click', loadMoreButton);
+		addPhoto.addEventListener('click', hashtagButtonEvent);
+		addPhoto.addEventListener('click', addSubmitClick);
+
+		document.getElementById('add-hashtag-input').addEventListener('keydown', inputHashtagEvent);
+		addPhoto.addEventListener('change', choosePhotoEvents);
 		document.getElementById('sign').addEventListener('submit', signFormsEvents);
 		document.getElementById('search').addEventListener('submit', searchFormsEvents);
+
+		dropBox.addEventListener('dragenter', dragEvent);
+		dropBox.addEventListener('dragover', dragEvent);
+		dropBox.addEventListener('drop', dropEvent);
 	}
 
 	const photoContainer = document.getElementById('photos');
 	const popupContainer = document.getElementById('popup-photos');
 	const addPhotoForm = document.getElementById('add-photo');
+
 	const gallery = new PostList(Storage.getPostsList());
 	const currentFilter = new Filter();
 	const galleryViewer = new ViewGallery(currentFilter);

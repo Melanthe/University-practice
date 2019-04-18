@@ -22,16 +22,22 @@
     top: 8%;
     height: 68%;
     width: 45%;
-    background: url('icons/drag_and_drop.png');
-    background-size: cover;
 }
 
-#choose-photo {
+#drop-pic-box img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#input-photo-label {
     position: absolute;
+    padding-top: 10px;
     border-radius: 100%;
-    bottom: 4%;
+    bottom: 3%;
     left: 19%;
-    width: 10%;
+    width: 11%;
     height: 17%;
     border: none;
     outline: none;
@@ -40,15 +46,21 @@
     font-size: 2vw;
     color: #ffeca0;
     cursor: pointer;
+    text-align: center;
+    line-height: 1.4em;
 }
 
-#choose-photo:active {
+#input-photo-label:active {
     border: 1px solid rgb(74, 75, 73);
     background: rgb(69, 93, 100);
 }
 
-#choose-photo:hover {
+#input-photo-label:hover {
     box-shadow: 0px 5px 4px rgba(250, 210, 52, 0.644);
+}
+
+#input-photo {
+    display: none;
 }
 
 #add-description {
@@ -83,33 +95,85 @@
     color: #247ba0;
 }
 
-#add-hashtag-button {
+#hashtag-box {
     position: absolute;
-    right: 45%;
     top: 45%;
+    right: 9%;
+    width: 40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#add-hashtag-button {
     height: 5%;
-    width: 3%;
+    width: 12%;
     color: #50514F;
     cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 2.1vw;
+    margin-right: 2px;
 }
 
 #add-hashtag-button:hover {
     color: #247ba0;
 }
 
-#add-hashtag {
-    position: absolute;
-    right: 32%;
-    top: 44%;
+#add-hashtag-input {
     resize: none;
     outline-color: #FFE066;
     font-family: 'Abel';
     color: rgb(74, 75, 73);
     font-size: 0.9vw;
     padding: 1%;
-    height: 3.2%;
-    width: 10%;
+    height: 1.7vw;
+    width: 40%;
     overflow: hidden;
+    margin-right: 2px;
+}
+
+#hashtag-error {
+    flex-grow: 1;
+    justify-self: flex-end;
+    text-align: center;
+    font-family: 'Abel';
+    font-size: 1.3vw;
+    color: #F25F5C;
+}
+
+.hashtags-container {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    overflow: hidden;
+    max-height: 50%;
+    width: 46.2%;
+    right: 2%;
+    top: 52%;
+    height: auto;
+}
+
+.hashtag-bubble {
+
+    margin: 2%;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2vw;
+}
+
+.hashtag-bubble span {
+    margin: 5px;
+    font-family: 'Abel';
+    color: #247ba0;
+}
+
+.fa-minus:hover {
+    color: #F25F5C;
 }
 
 #add-form-ready {
@@ -120,6 +184,10 @@
     width: 8%;
     color: #50514F;
     cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 3vw;
 }
 
 #add-form-ready:hover {

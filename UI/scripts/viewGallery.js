@@ -116,6 +116,10 @@ class ViewGallery {
 			like.dataset.status = '1';
 			like.lastElementChild.style.color = '#FFE066';
 		}
+		if (userName === '' || userName !== item.photo.author) {
+			popupBox.querySelector('.fa-pen').style.display = 'none';
+			popupBox.querySelector('.delete').style.display = 'none';
+		}
 		container.appendChild(popupBox);
 	}
 

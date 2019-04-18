@@ -3,14 +3,13 @@
 
 class User {
 
-	constructor(name = '', password = '', photoPath = '', numOfPosts = 0) {
+	constructor(name = '', password = '', photoPath = '') {
 		if (typeof (name) !== 'string') {
 			console.log('Incorrect argument!');
 			return;
 		}
 		this._name = name;
 		this._photoPath = (photoPath === '') ? 'img/guest.jpg' : photoPath;
-		this._numOfPosts = numOfPosts;
 		this._password = password;
 	}
 
@@ -19,8 +18,7 @@ class User {
 			return (new User(
 				object._name,
 				object._password,
-				object._photoPath,
-				object._numOfPosts
+				object._photoPath
 			));
 		}
 		return undefined;

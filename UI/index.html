@@ -44,21 +44,27 @@
         </div>
 
         <div id='add-photo' hidden>
-            <form id='add-form'>
+            <form id='add-form' name='add-photo'>
                 <div id='add-photo-box'>
-                    <div id='drop-pic-box'><img src=''></div>
-                    <button id='choose-photo' type='file'>CHOOSE PHOTO</button>
+                    <div id='drop-pic-box'><img src='styles/icons/drag_and_drop.png'></div>
+                    <label for='input-photo' id='input-photo-label'>CHOOSE PHOTO</label>
+                    <input id='input-photo' type='file'>
+
                     <textarea id='add-description' placeholder='Tell us a bit about your photo...'></textarea>
+
+                    <div id='hashtag-box'>
+                        <button id='add-hashtag-button'><i id='hashtag-button-font' class='fas fa-plus add'></i></button>
+                        <input id='add-hashtag-input' placeholder='Add a hashtag' maxlength='15'>
+                        <div id='hashtag-error'></div>
+                    </div>
+                    <div class='hashtags-container'></div>
+                    <button form='add-photo' id='add-form-ready' type='submit'><i class='fas fa-check'></i></button>
                     <i id='close-add-form' class='far fa-times-circle close'></i>
-                    <i id='add-hashtag-button' class='fas fa-plus add'></i>
-                    <textarea id='add-hashtag' placeholder='Add a hashtag'></textarea>
-                    <div class='edit-hashtags'></div>
-                    <button id='submit-add-form' type='submit'><i id='add-form-ready' class='fas fa-check'></i></button>
                 </div>
             </form>
         </div>
 
-        <div id='search' data-status = '' hidden>
+        <div id='search' data-status='' hidden>
             <div id='search-box'>
                 <span id='search-title'></span>
                 <form id='search-form'><input id='search-input-box' required></form>
@@ -110,7 +116,9 @@
     <script src='scripts/storage.js'></script>
     <script src='scripts/viewGallery.js'></script>
     <script src='scripts/viewHeader.js'></script>
+    <script src='scripts/viewElements.js'></script>
     <script src='scripts/onClick.js'></script>
+    <script src='scripts/onSubmit.js'></script>
     <script src='scripts/loadedEvent.js'></script>
     <script src='scripts/controller.js'></script>
 </body>
