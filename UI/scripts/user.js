@@ -1,18 +1,31 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+
 class User {
 
-	constructor(name = '') {
-		if (name === '' || typeof (name) !== 'string') {
+	constructor(name = '', password = '', photoPath = '') {
+		if (typeof (name) !== 'string') {
 			console.log('Incorrect argument!');
 			return;
 		}
 		this._name = name;
-		this._photoPath = '';
-		this._numOfPosts = 0;
-		this._likedPosts = [];
+		this._photoPath = (photoPath === '') ? 'img/guest.jpg' : photoPath;
+		this._password = password;
+	}
+
+	static parseToUser(object) {
+		if (object) {
+			return (new User(
+				object._name,
+				object._password,
+				object._photoPath
+			));
+		}
+		return undefined;
 	}
 
 	set userName(name = '') {
-		if (name === '' || typeof (name) !== 'string') {
+		if (typeof (name) !== 'string') {
 			console.log('Incorrect argument!');
 			return;
 		}
@@ -24,6 +37,10 @@ class User {
 			console.log('Incorrect argument!');
 			return;
 		}
+		if (this._name === '') {
+			console.log('Invalid operation! There is no active user.');
+			return;
+		}
 		this._photoPath = path;
 	}
 
@@ -33,5 +50,9 @@ class User {
 
 	get userPhoto() {
 		return this._photoPath;
+	}
+
+	get userPassword() {
+		return this._password;
 	}
 }

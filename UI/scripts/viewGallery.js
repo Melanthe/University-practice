@@ -1,8 +1,12 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+
 class ViewGallery {
 
-	constructor() {
+	constructor(filter = new Filter()) {
 		this._shown = 0;
-		this._curFilter = new Filter();
+		this._curFilter = filter;
 	}
 
 	incrementShown() {
@@ -12,7 +16,20 @@ class ViewGallery {
 	decrementShown() {
 		this._shown--;
 	}
-	_createPost(item, container) {
+
+	refreshShown() {
+		this._shown = 0;
+	}
+
+	get currentFilter() {
+		return this._curFilter;
+	}
+
+	get numberOfShown() {
+		return this._shown;
+	}
+
+	_createPost(item, container, userName) {
 
 		let photo = document.createElement('div');
 		photo.classList.add('photo');
@@ -27,8 +44,12 @@ class ViewGallery {
 				<button class='heart'><i class='fas fa-heart'></i></button>
 			</div>
 		</div>`;
+		if ((userName !== '') && (item.ifLiked(userName))) {
+			let like = photo.querySelector('.like');
+			like.dataset.status = '1';
+			like.lastElementChild.style.color = '#FFE066';
+		}
 		container.appendChild(photo);
-		OnClick.like(container.lastChild.querySelector('.like'), item);
 	}
 
 	_reformDate(date) {
@@ -57,7 +78,7 @@ class ViewGallery {
 		});
 	}
 
-	_createPopupBox(item, container) {
+	_createPopupBox(item, container, userName) {
 
 		let popupBox = document.createElement('div');
 		popupBox.classList.add('popup-box');
@@ -72,29 +93,37 @@ class ViewGallery {
 				<div class='date'>${this._reformDate(item.date)}</div>
 			</div>
 			<div class='header-buttons'>
-				<button class='edit'></button>
-				<button class='close'></button>
+			<i class="fas fa-pen edit"></i>
+			<i class="far fa-times-circle close"></i>
 			</div>
 			<div class='description'>
 				<span class='text'>${item.description}</span>
 			</div>
 			<div class='hashtags'></div>
 			<div class='comments'></div>
-			<textarea id='add-comment' placeholder='Comment this photo...' maxlength='200' rows='2'></textarea>
+			<form class='add-comment'><textarea placeholder='Comment this photo...' maxlength='200' rows='2'></textarea></form>
 			<div class='like' data-status='0'>
 				<span class='numOfLikes'>${item.likes}</span>
 				<button class='heart'>
-					<i class='fas fa-heart'></i>
+					<i class='fas fa-heart like-button'></i>
 				</button>
 			</div>
+			<i class="fas fa-trash-alt delete"></i>
 		</div>`;
 		this._fillHashtags(item, popupBox);
+		if ((userName !== '') && (item.ifLiked(userName))) {
+			let like = popupBox.querySelector('.like');
+			like.dataset.status = '1';
+			like.lastElementChild.style.color = '#FFE066';
+		}
+		if (userName === '' || userName !== item.photo.author) {
+			popupBox.querySelector('.fa-pen').style.display = 'none';
+			popupBox.querySelector('.delete').style.display = 'none';
+		}
 		container.appendChild(popupBox);
-		OnClick.like(container.lastChild.querySelector('.like'), item);
-		OnClick.exitPopup(popupBox.querySelector('.close'), popupBox, container);
 	}
 
-	showPost(post) {
+	showPost(post, userName) {
 
 		if (!(post instanceof Post) || !(post.validatePhotoPost())) {
 			console.log('Incorrect argument!');
@@ -102,27 +131,18 @@ class ViewGallery {
 		}
 
 		let photos = document.getElementById('photos');
-		this._createPost(post, photos);
+		this._createPost(post, photos, userName);
 
 		let popup = document.getElementById('popup-photos');
-		this._createPopupBox(post, popup);
+		this._createPopupBox(post, popup, userName);
 		popup.hidden = true;
-
-		OnClick.openPopup(photos.lastChild.querySelector('.clickPlace'), popup.lastChild, popup);
 	}
 
-	showPhotoPosts(gallery, skip = 0, amount = 15) {
-
-		if (!(gallery instanceof PostList)) {
-			console.log('Incorrect argument!');
-			return;
-		}
-
-		gallery.getPhotoPosts(skip, amount, this._curFilter).forEach((post) => {
-			this.showPost(post);
+	showPhotoPosts(postList, userName) {
+		postList.forEach((post) => {
+			this.showPost(post, userName);
+			this.incrementShown();
 		});
-
-		this._shown += (amount - skip);
 	}
 
 	removePost(id = 0) {
@@ -133,11 +153,6 @@ class ViewGallery {
 
 		let popup = document.getElementById('popup-photos').children[index];
 		popup && popup.remove();
-	}
-
-	loadMore() {
-		OnClick.loadMore(this._gallery, this);
-		this._shown += 15;
 	}
 
 	setFilter(filter = new Filter()) {

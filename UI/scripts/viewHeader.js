@@ -9,7 +9,7 @@ class ViewHeader {
 
 		let parent = document.getElementsByClassName('user-bar')[0];
 		parent.innerHTML = `
-		<div id="sign">
+		<div id="header-sign">
 		<a id="sign-out">sign out</a>
 		</div>
 		<div class="user">
@@ -22,7 +22,7 @@ class ViewHeader {
 
 		let parent = document.getElementsByClassName('user-bar')[0];
 		parent.innerHTML = `
-		<div id="sign">
+		<div id="header-sign">
 		<a id="sign-in">sign in</a>
 		<a id="sign-up">sign up</a>
 		</div>

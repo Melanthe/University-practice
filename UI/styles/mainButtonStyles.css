@@ -1,0 +1,152 @@
+#main-buttons {
+    position: absolute;
+    position: fixed;
+    bottom: 30%;
+    left: 1%;
+    height: 200px;
+    min-width: 900px;
+}
+
+#main-buttons #filter-button, #main-buttons #add-photo-button {
+    border: none;
+    outline: none;
+    border-radius: 50%;
+}
+
+#main-buttons #filter-button {
+    position: absolute;
+    height: 100%;
+    width: 10%;
+    background-color: #F25F5C;
+    background-image: url("icons\\filter.png");
+    background-size: cover;
+    opacity: 0.7;
+    cursor: pointer;
+    margin-bottom: 7px;
+    display: block;
+    transition: .6s ease;
+}
+
+#main-buttons #add-photo-button {
+    position: absolute;
+    height: 45%;
+    bottom: 0;
+    left: 0;
+    width: 10%;
+    background-color: #F25F5C;
+    background-image: url("icons\\photo.png");
+    background-size: cover;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: .6s ease;
+}
+
+#main-buttons #filter-button:hover, #main-buttons #add-photo-button:hover {
+    opacity: 1;
+}
+
+#filter {
+    position: absolute;
+    height: 45%;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#filter-fields {
+    position: absolute;
+    left: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#filter-fields img {
+    display: block;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: .6s ease;
+}
+
+#filter-fields img:hover {
+    opacity: 1;
+}
+
+#author-filter, #hashtag-filter {
+    margin: 2%;
+}
+
+#filters-container {
+    position: absolute;
+    left: 28%;
+    top: 5%;
+    width: auto;
+    height: 90%;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#author-filters, #hashtag-filters {
+    height: 40%;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.filter-bubble {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 2px;
+    font-family: 'Amatic SC';
+    font-size: 23px;
+}
+
+.filter-bubble span {
+    margin-right: 5px;
+    color: #FFE066;
+    background: rgb(46, 87, 80);
+    padding: 5px; 
+    border-radius: 40%;
+    width: 110px;
+    text-align: center;
+    opacity: 0.7;
+    transition: .6s ease;
+}
+
+.filter-bubble .fa-minus {
+    color: #FFE066;
+}
+
+.filter-bubble span:hover {
+    opacity: 1;
+}
+
+#load-more {
+    background: rgb(143, 209, 198);
+    font-family: 'Amatic SC';
+    color: rgb(36, 123, 160);
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+#load-more:hover {
+    background: rgb(105, 201, 185);
+}
+
+.close:active {
+    color: black;
+}
+
+.close:hover {
+    color: rgb(36, 123, 160);
+}

@@ -1,3 +1,7 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+
 function isStringArray(array) {
 
 	if (!Array.isArray(array)) {
@@ -66,9 +70,13 @@ class PostList {
 	_sortByDate(list) {
 
 		list.sort(function (x, y) {
-			return (x.date.getTime() - y.date.getTime());
+			return (y.date.getTime() - x.date.getTime());
 		});
 		return true;
+	}
+
+	get numOfPosts() {
+		return this._posts.length;
 	}
 
 	getPhotoPosts(skip = 0, top = 15, filterConfig = new Filter()) {
@@ -103,7 +111,7 @@ class PostList {
 		return result;
 	}
 
-	getPhotoPost(id) {
+	getPhotoPost(id) {	
 		return this._posts.find(function (item) {
 			return (item.id === id);
 		});
