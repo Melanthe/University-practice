@@ -101,7 +101,7 @@ class ViewGallery {
 			</div>
 			<div class='hashtags'></div>
 			<div class='comments'></div>
-			<form id='add-comment'><textarea placeholder='Comment this photo...' maxlength='200' rows='2'></textarea></form>
+			<form class='add-comment'><textarea placeholder='Comment this photo...' maxlength='200' rows='2'></textarea></form>
 			<div class='like' data-status='0'>
 				<span class='numOfLikes'>${item.likes}</span>
 				<button class='heart'>
@@ -109,7 +109,7 @@ class ViewGallery {
 				</button>
 			</div>
 			<i class="fas fa-trash-alt delete"></i>
-			</div>`;
+		</div>`;
 		this._fillHashtags(item, popupBox);
 		if ((userName !== '') && (item.ifLiked(userName))) {
 			let like = popupBox.querySelector('.like');

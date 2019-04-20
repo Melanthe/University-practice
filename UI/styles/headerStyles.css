@@ -1,4 +1,4 @@
-.header {
+#header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,7 +17,7 @@
     z-index: 1000;
 }
 
-.header a {
+#header a {
     text-decoration: none;
 }
 
@@ -31,13 +31,13 @@
     width: 33%;
 }
 
-.header a.logo {
+#header a.logo {
     font-size: 85px;
     justify-self: center;
     width: 33%;
 }
 
-.header .user-bar {
+#header .user-bar {
     display: flex;
     align-content: center;
     justify-content: flex-end;

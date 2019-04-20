@@ -125,7 +125,7 @@
     margin-right: 2%;
 }
 
-#add-comment textarea{
+.add-comment textarea{
     position: absolute;
     width: 96%;
     height: 13%;
@@ -139,7 +139,7 @@
     outline-color: #FFE066;
 }
 
-#add-comment textarea::selection {
+.add-comment textarea::selection {
     background: #FFE066;
 }
 
@@ -165,3 +165,4 @@
     color: #50514F;
     font-size: 1.3vw;
 }
+

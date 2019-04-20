@@ -95,7 +95,7 @@
     color: #247ba0;
 }
 
-#hashtag-box {
+.hashtag-box {
     position: absolute;
     top: 45%;
     right: 9%;
@@ -105,7 +105,7 @@
     align-items: center;
 }
 
-#add-hashtag-button {
+.add-hashtag-button {
     height: 5%;
     width: 12%;
     color: #50514F;
@@ -117,11 +117,11 @@
     margin-right: 2px;
 }
 
-#add-hashtag-button:hover {
+.add-hashtag-button:hover {
     color: #247ba0;
 }
 
-#add-hashtag-input {
+.add-hashtag-input {
     resize: none;
     outline-color: #FFE066;
     font-family: 'Abel';
@@ -134,7 +134,7 @@
     margin-right: 2px;
 }
 
-#hashtag-error {
+.hashtag-error {
     flex-grow: 1;
     justify-self: flex-end;
     text-align: center;
@@ -368,4 +368,90 @@
     color: #FFE066;
     font-family: 'Amatic SC';
     font-size: 1.8vw;
+}
+
+.edit-pic {
+    position: absolute;
+    width: 34.1vw;
+    height: 5.3vw;
+    bottom: -17.2%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-pic #edit-photo-label{
+    display: block;
+    height: 72%;
+    width: 13%;
+    border-radius: 100%;
+    padding-top: 2%;
+    border: none;
+    outline: none;
+    background: #274586;
+    font-family: 'Amatic SC';
+    font-size: 1.3vw;
+    color: #ffeca0;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.4em;
+}
+
+#edit-photo-label:active {
+    border: 1px solid rgb(74, 75, 73);
+    background: rgb(69, 93, 100);
+}
+
+#edit-photo-label:hover {
+    box-shadow: 0px 5px 4px rgba(250, 210, 52, 0.644);
+}
+
+.edit-pic #edit-photo {
+    display: none;
+}
+
+#edit-description {
+    position: absolute;
+    top: 15%;
+    right: 1%;
+    width: 96%;
+    height: 30%;
+    resize: none;
+    outline-color: #FFE066;
+    font-family: 'Abel';
+    color: rgb(74, 75, 73);
+    font-size: 1.2vw;
+    padding: 1%;
+}
+
+.popup-box .hashtags-container {
+    top: 57%;
+    left: 1%;
+    width: 97.3%;
+    max-height: 30%;
+}
+
+.popup-box .hashtag-box {
+    position: absolute;
+    left: 1%;
+    top: 50%;
+}
+
+.popup-box .add-hashtag-button {
+    margin-right: 7%;
+}
+
+#edit-form-ready {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 3.2vw;
+}
+
+#edit-form-ready:hover {
+    color: #70C1B3;
 }

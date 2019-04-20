@@ -25,10 +25,12 @@ class OnClick {
 
 		if (filter.dataset.status === '0') {
 			document.getElementById('filter-fields').style.display = '';
+			document.getElementById('filters-container').style.display = '';
 			filter.dataset.status = '1';
 		}
 		else {
 			document.getElementById('filter-fields').style.display = 'none';
+			document.getElementById('filters-container').style.display = 'none';
 			filter.dataset.status = '0';
 		}
 	}
@@ -101,20 +103,21 @@ class OnClick {
 		}
 	}
 
-	static addHashtag(event, addPhotoForm) {
+	static addHashtag(event, form) {
 
 		event.preventDefault();
-		if (addPhotoForm.querySelector('.hashtags-container').childElementCount >= 10) {
+		if (form.querySelector('.hashtags-container').childElementCount >= 10) {
 			document.getElementById('hashtag-error').textContent = 'Too many hashtags!';
 			return false;
 		}
-		let hashtag = document.getElementById('add-hashtag-input').value.trim();
+		let hashtag = form.querySelector('.add-hashtag-input').value.trim();
 		if (!/^[0-9a-z]+$/.test(hashtag)) {
-			document.getElementById('hashtag-error').textContent = 'Incorrect input!';
+			form.querySelector('.hashtag-error').textContent = 'Incorrect input!';
 			return false;
 		}
-		ViewElements.hashtagBubble(hashtag);
-		document.getElementById('add-hashtag-input').value = '';
+		const container = form.querySelector('.hashtags-container');
+		ViewElements.hashtagBubble(hashtag, container);
+		form.querySelector('.add-hashtag-input').value = '';
 	}
 
 	static removeTagBubble(targetBubble) {
@@ -122,20 +125,21 @@ class OnClick {
 		currentTag.remove();
 	}
 
-	static submitAddForm(addPhotoForm, user, gallery) {
-		
-		const photoPath = document.getElementById('drop-pic-box').firstElementChild.src;
-		const description = addPhotoForm.querySelector('#add-description').value;
-		const hashtagsNodes = addPhotoForm.querySelector('.hashtags-container').children;
-		const hashtags = Array.from(hashtagsNodes).map(function (tag) {
-			return tag.firstElementChild.textContent;
-		});
+	static removeFilterBubble(targetBubble, currentFilter) {
 
-		let new_photo = new Photo(photoPath, user.userName);
-		let new_post = new Post(new_photo, description, hashtags, new Date());
-		gallery.addPhotoPost(new_post);
-		Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
-		location.reload();
+		let filter = targetBubble.closest('.filter-bubble');
+		let check = targetBubble.closest('#author-filters');
+		let container =  check ? check :  targetBubble.closest('#hashtag-filters');
+		
+		filter.remove();
+		container.dataset.count = (+container.dataset.count - 1) + '';
+		if (check) {
+			currentFilter.f_author = '';
+		}
+		else {
+			let tag = filter.firstElementChild.textContent;
+			currentFilter.f_hashtags.splice(currentFilter.f_hashtags.indexOf(tag), 1);
+		}
 	}
 
 	static deletePhoto(popup, popupContainer, gallery) {
@@ -171,6 +175,12 @@ class OnClick {
 		document.getElementById('drop-pic-box').firstElementChild.src = 'styles/icons/drag_and_drop.png';
 		document.getElementById('hashtag-error').textContent = '';
 		addPhotoForm.querySelector('.hashtags-container').innerHTML = '';
+	}
+
+	static closePhotoEditing(box) {
+		const popup = box.nextElementSibling;
+		box.remove();
+		popup.hidden = false;
 	}
 
 	static loadMore(gallery, viewer) {

@@ -5,7 +5,7 @@
     #help {
         width: 0%;
     }
-    .header a.logo {
+    #header a.logo {
         width: 100%;
     }
     .footer #contacts {
@@ -17,14 +17,14 @@
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .user-bar.hide {
         display: none;
     }
 }
 
 @media (max-width: 450px) {
-    .header, .footer {
+    #header, .footer {
         display: none;
     }
 }

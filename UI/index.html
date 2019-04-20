@@ -23,7 +23,7 @@
 
     <main>
 
-        <div class='header'>
+        <div id='header'>
             <div id='help'></div>
             <a href='#' class='logo'>moment</a>
             <div class='user-bar hide'></div>
@@ -39,6 +39,10 @@
                     <div id='author-filter'><img src='styles/icons/filter_author.png'></div>
                     <div id='hashtag-filter'><img src='styles/icons/filter_hashtag.png'></div>
                 </div>
+                <div id="filters-container" style='display: none'>
+                    <div id="author-filters" data-count='0'></div>
+                    <div id="hashtag-filters" data-count='0'></div>
+                </div>
             </div>
             <button id='add-photo-button'></button>
         </div>
@@ -52,10 +56,10 @@
 
                     <textarea id='add-description' placeholder='Tell us a bit about your photo...'></textarea>
 
-                    <div id='hashtag-box'>
-                        <button id='add-hashtag-button'><i id='hashtag-button-font' class='fas fa-plus add'></i></button>
-                        <input id='add-hashtag-input' placeholder='Add a hashtag' maxlength='15'>
-                        <div id='hashtag-error'></div>
+                    <div class='hashtag-box' data-status='0'>
+                        <button class='add-hashtag-button'><i class='fas fa-plus add hashtag-button-font'></i></button>
+                        <input class='add-hashtag-input' placeholder='Add a hashtag' maxlength='15' autocomplete="off">
+                        <div class='hashtag-error'></div>
                     </div>
                     <div class='hashtags-container'></div>
                     <button form='add-photo' id='add-form-ready' type='submit'><i class='fas fa-check'></i></button>
@@ -67,7 +71,7 @@
         <div id='search' data-status='' hidden>
             <div id='search-box'>
                 <span id='search-title'></span>
-                <form id='search-form'><input id='search-input-box' required></form>
+                <form id='search-form'><input id='search-input-box' autocomplete="off" required></form>
                 <i id='close-search' class='far fa-times-circle close'></i>
                 <div id="search-error"></div>
             </div>
@@ -79,11 +83,11 @@
                 <form action='' id='sign-form' data-status=''>
                     <div class='login-box'>
                         <label for='input-login' id='login-label'>LOGIN</label>
-                        <input id='input-login' type='text' value='' required>
+                        <input id='input-login' type='text' value='' autocomplete="off" pattern="^[a-z][\da-z]{5,20}$" required>
                     </div>
                     <div class='password-box'>
                         <label for='input-password' id='login-label'>PASSWORD</label>
-                        <input id='input-password' type='text' value='' required>
+                        <input id='input-password' type='password' value='' autocomplete="off" pattern="^[\da-z\.]{8,20}$" required>
                     </div>
                     <div class='help'><input type='submit' id='submit-button' value='OK'></div>
                     <div id='sign-error'></div>

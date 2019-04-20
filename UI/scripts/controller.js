@@ -122,15 +122,34 @@
 	}
 
 	function searchFormsEvents(event) {
-		OnSubmit.submitSearchForm(event, currentFilter, galleryViewer, photoContainer, popupContainer);
-		showPosts(0, 15);
-		OnClick.closeSearchForm();
+		if (OnSubmit.submitSearchForm(event, currentFilter, galleryViewer, photoContainer, popupContainer)) {
+			showPosts(0, 15);
+			OnClick.closeSearchForm();
+		}
+	}
+
+	function removeFilter(event) {
+		if (event.target.classList.contains('filter-minus') || event.target.parentNode.classList.contains('filter-minus')) {
+			OnClick.removeFilterBubble(event.target, currentFilter);
+			galleryViewer.setFilter(currentFilter);
+			galleryViewer.refreshShown();
+			photoContainer.innerHTML = '';
+			popupContainer.innerHTML = '';
+			showPosts(0, 15);
+		}
 	}
 
 	function choosePhotoEvents(event) {
-		if (event.target.id === 'input-photo') {
-			const selectedFile = document.getElementById('input-photo').files[0];
-			const imgBox = document.getElementById('drop-pic-box').firstElementChild;
+		if (event.target.id === 'input-photo' || event.target.id === 'edit-photo') {
+			let selectedFile, imgBox;
+			if (event.target.id === 'input-photo') {
+				selectedFile = document.getElementById('input-photo').files[0];
+				imgBox = document.getElementById('drop-pic-box').firstElementChild;
+			}
+			else {
+				selectedFile = document.getElementById('edit-photo').files[0];
+				imgBox = event.target.closest('.popup-box').querySelector('.pic');
+			}
 			let filePath = URL.createObjectURL(selectedFile);
 			imgBox.src = filePath;
 		}
@@ -153,8 +172,11 @@
 	}
 
 	function inputHashtagEvent(event) {
-		if (event.keyCode === 13) {
-			OnClick.addHashtag(event, addPhotoForm);
+		if (event.target.classList.contains('add-hashtag-input')) {
+			if (event.keyCode === 13) {
+				const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
+				OnClick.addHashtag(event, container);
+			}
 		}
 	}
 
@@ -163,17 +185,18 @@
 		const targetNode = event.target;
 		const parent = targetNode.parentNode;
 
-		if (targetNode.id === 'hashtag-button-font' || parent.id === 'hashtag-button-font') {
-			OnClick.addHashtag(event, addPhotoForm);
+		if (targetNode.classList.contains('hashtag-button-font') || parent.classList.contains('hashtag-button-font')) {
+			const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
+			OnClick.addHashtag(event, container);
 		}
-		if (targetNode.classList.contains('fa-minus') || parent.classList.contains('fa-minus')) {
+		if (targetNode.classList.contains('tag-minus') || parent.classList.contains('tag-minus')) {
 			OnClick.removeTagBubble(targetNode);
 		}
 	}
 
 	function addSubmitClick(event) {
 		if (event.target.classList.contains('fa-check') || event.target.parentNode.classList.contains('fa-check')) {
-			OnClick.submitAddForm(addPhotoForm, user, gallery);
+			OnSubmit.submitAddForm(addPhotoForm, user, gallery);
 		}
 	}
 
@@ -182,6 +205,24 @@
 			OnClick.deletePhoto(event.target.closest('.popup-box'), popupContainer, gallery);
 			Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
 			location.reload();
+		}
+	}
+
+	function viewPhotoEditing(event) {
+		if (event.target.classList.contains('edit') || event.target.parentNode.classList.contains('edit')) {
+			ViewElements.editPhoto(event.target.closest('.popup-box'), gallery, galleryViewer);
+		}
+	}
+
+	function closePhotoEditing(event) {
+		if (event.target.id === 'close-edit' || event.target.parentNode.id === 'close-edit') {
+			OnClick.closePhotoEditing(event.target.closest('.popup-box'));
+		}
+	}
+
+	function submitPhotoEditing(event) {
+		if (event.target.classList.contains('fa-check') || event.target.parentNode.classList.contains('fa-check')) {
+			OnSubmit.submitPhotoEdition(event.target.closest('.popup-box'), gallery);
 		}
 	}
 
@@ -194,25 +235,28 @@
 	function bind() {
 
 		const dropBox = document.getElementById('drop-pic-box');
-		const addPhoto = document.getElementById('add-photo');
 
 		photoContainer.addEventListener('click', photoLike);
 		photoContainer.addEventListener('click', openPopup);
 		popupContainer.addEventListener('click', popupLike);
 		popupContainer.addEventListener('click', exitPopup);
+		popupContainer.addEventListener('click', viewPhotoEditing);
 		popupContainer.addEventListener('click', deletePhotoEvent);
+		popupContainer.addEventListener('click', closePhotoEditing);
+		popupContainer.addEventListener('click', submitPhotoEditing);
 
 		document.addEventListener('DOMContentLoaded', userEvents);
 		document.addEventListener('click', closeFormsEvents);
 		document.addEventListener('click', sideBarEvents);
 		document.addEventListener('click', openFormsEvents);
-		document.addEventListener('click', signButtonsEvents);
+		document.getElementById('main-buttons').addEventListener('click', removeFilter);
+		document.getElementById('header').addEventListener('click', signButtonsEvents);
 		document.addEventListener('click', loadMoreButton);
-		addPhoto.addEventListener('click', hashtagButtonEvent);
-		addPhoto.addEventListener('click', addSubmitClick);
+		document.addEventListener('click', hashtagButtonEvent);
+		document.getElementById('add-photo').addEventListener('click', addSubmitClick);
 
-		document.getElementById('add-hashtag-input').addEventListener('keydown', inputHashtagEvent);
-		addPhoto.addEventListener('change', choosePhotoEvents);
+		document.addEventListener('keydown', inputHashtagEvent);
+		document.addEventListener('change', choosePhotoEvents);
 		document.getElementById('sign').addEventListener('submit', signFormsEvents);
 		document.getElementById('search').addEventListener('submit', searchFormsEvents);
 
