@@ -1,4 +1,4 @@
-package servlets;
+package photoPortal.servlets;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/test1")
-public class Test1 extends HttpServlet {
+public class Test1Servlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/status");
             dispatcher.forward(request, response);
@@ -25,7 +25,7 @@ public class Test1 extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         doGet(request, response);
     }
 }

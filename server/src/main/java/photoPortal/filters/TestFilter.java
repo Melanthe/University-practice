@@ -1,4 +1,4 @@
-package filters;
+package photoPortal.filters;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,6 +12,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/", "/status", "/get", "/check", "/page", "/test1", "/test2"})
 public class TestFilter implements Filter {
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
