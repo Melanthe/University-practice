@@ -14,7 +14,9 @@ public class PostsList {
         this.posts = new ArrayList<>(posts);
     }
 
-    public PostsList() {this.posts = new ArrayList<>();}
+    public PostsList() {
+        this.posts = new ArrayList<>();
+    }
 
     public int getNumOfPosts() {
         return posts.size();
@@ -22,7 +24,7 @@ public class PostsList {
 
     public Post getPost(long id) {
 
-        for (Post item: posts) {
+        for (Post item : posts) {
             if (item.getId() == id) {
                 return item;
             }
@@ -67,12 +69,16 @@ public class PostsList {
     }
 
     private void sortByDate(List<Post> list) {
-        list.sort((x, y) -> (int)(y.getDate().getTime() - x.getDate().getTime()));
+        list.sort((x, y) -> (int) (y.getDate().getTime() - x.getDate().getTime()));
     }
 
     public List<Post> getPhotoPosts(int skip, int top, Filter filterConfig) {
 
         List<Post> result = new ArrayList<>(posts);
+
+        if (top > posts.size() - skip) {
+            top = posts.size() - skip;
+        }
 
         if (!(filterConfig.isEmptyFilter())) {
 
@@ -82,20 +88,18 @@ public class PostsList {
             if (filterConfig.getHashtags().size() != 0) {
                 result = filterByHashtags(top + skip, filterConfig.getHashtags(), result);
             }
-            result = List.copyOf(result.subList(skip, result.size()));
+            result = new ArrayList<>(result.subList(skip, result.size()));
 
         } else {
-            result = List.copyOf(result.subList(skip, skip + top));
+            result = new ArrayList<>(result.subList(skip, skip + top));
         }
 
-        if (filterConfig.isDate()) {
-            sortByDate(result);
-        }
+        sortByDate(result);
 
         return result;
     }
 
-    private boolean ifExistID(long id) {
+    public boolean ifExistID(long id) {
         return posts.stream().anyMatch(item -> (item.getId() == id));
     }
 
@@ -118,34 +122,21 @@ public class PostsList {
         return false;
     }
 
-    public List<Post> addAllposts(List<Post> postsToAdd) {
+    public boolean editPhotoPost(long id, String description, String photoPath, List<String> hashtags) {
 
-        List<Post> invalidPhotos = new ArrayList<>();
 
-        for (Post post : postsToAdd) {
-            if (!addPhotoPost(post)) {
-                invalidPhotos.add(post);
-            }
-        }
-        return invalidPhotos;
-    }
-
-    public boolean editPhotoPost(long id, Post new_post) {
-
-        if (!new_post.validatePhotoPost()) {
+        Post post = getPost(id);
+        if (post == null) {
             return false;
-        } else {
-
-            Post post = getPost(id);
-
-            if (post == null) {
-                return false;
-            }
-
-            post.setPhotoPath(new_post.getPhotoPath());
-            post.setDescription(new_post.getDescription());
-            post.setHashtags(new_post.getHashtags());
         }
+
+        if (photoPath.equals("")) {
+            return false;
+        }
+        post.setPhotoPath(photoPath);
+        post.setDescription(description);
+        post.setHashtags(hashtags);
+
         return true;
     }
 

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("")
+@WebServlet("/init")
 public class InitServlet extends HttpServlet {
 
     @Override

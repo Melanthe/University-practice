@@ -7,18 +7,15 @@ public class Filter {
 
     private String author;
     private List<String> hashtags;
-    private boolean date;
 
-    public Filter(String author, List<String> hashtags, boolean date) {
+    public Filter(String author, List<String> hashtags) {
         this.author = author;
         this.hashtags = new ArrayList<>(hashtags);
-        this.date = date;
     }
 
     public Filter() {
         this.author = "";
-        this.hashtags = new ArrayList<String>();
-        this.date = true;
+        this.hashtags = new ArrayList<>();
     }
 
     public String getAuthor() {
@@ -29,8 +26,12 @@ public class Filter {
         return hashtags;
     }
 
-    public boolean isDate() {
-        return date;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setHashtags(List<String> hashtags) {
+        this.hashtags = hashtags;
     }
 
     public boolean isEmptyFilter() {
