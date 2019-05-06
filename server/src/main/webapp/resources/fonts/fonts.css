@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Amatic SC';
+    src: url('Amaticscregular.ttf');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Amatic SC';
+    src: url('Amaticscbold.ttf');
+    font-style: bold;
+}
+@font-face {
+    font-family: 'Abel';
+    src: url('Abel-Regular.ttf');
+    font-style: normal;
+}
