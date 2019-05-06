@@ -1,0 +1,13 @@
+html {
+    min-width: 450px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 0px;
+    background-color: rgb(36, 123, 160);
+}

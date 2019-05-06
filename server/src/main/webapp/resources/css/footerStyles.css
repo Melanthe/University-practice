@@ -1,0 +1,39 @@
+.footer {
+    position: relative;
+    height: 50px;
+    padding: 6px;
+    overflow: hidden;
+    margin: 0;
+    background: #FFE066;
+    color: rgb(36, 123, 160);
+}
+
+.footer #contacts {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Abel';
+    font-weight: normal;
+    position: absolute;
+    left: 0.5%;
+}
+
+#creator {
+    margin-bottom: 5px;
+}
+
+.footer .logo {
+    font-size: 40px;
+    font-weight: bolder;
+    margin-right: 5vw;
+    position: absolute;
+    left: 47.3%;
+}
+
+.footer .edit-date {
+    position: absolute;
+    top: 25%;
+    right: 0.5%;
+    padding-top: 5px;
+    font-family: 'Abel';
+    font-weight: normal;
+}

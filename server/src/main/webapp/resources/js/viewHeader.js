@@ -27,9 +27,8 @@ class ViewHeader {
 		<a id="sign-up">sign up</a>
 		</div>
 		<div class="user">
-			<img id="user-photo" src = "img/guest.jpg" alt="Invalid photo">
+			<img id="user-photo" src = "resources/img/guest.jpg" alt="Invalid photo">
 			<div id="user-nickname">guest</div>
 		</div>`;
-		//gellglg!
 	}
 }
