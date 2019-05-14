@@ -75,7 +75,7 @@ class PostList {
 		return true;
 	}
 
-	get numOfPosts() {
+	get numberOfPosts() {
 		return this._posts.length;
 	}
 
@@ -109,6 +109,10 @@ class PostList {
 		}
 
 		return result;
+	}
+
+	getNumberOfFilter(skip, filter) {
+		return (this.getPhotoPosts(skip, this.numberOfPosts, filter).length);
 	}
 
 	getPhotoPost(id) {	

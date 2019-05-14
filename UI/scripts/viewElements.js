@@ -69,4 +69,31 @@ class ViewElements {
 
 		container.appendChild(bubble);
 	}
+
+	static comment(author, text, box) {
+		
+		let commentBox = document.createElement('div');
+		let authorSpan = document.createElement('span');
+		let textSpan = document.createElement('span');
+
+		commentBox.classList.add('comment');
+		authorSpan.classList.add('comment-author');
+		authorSpan.textContent = author;
+		textSpan.classList.add('comment-text');
+		textSpan.textContent = text;
+		commentBox.appendChild(authorSpan);
+		commentBox.appendChild(textSpan);
+		box.parentNode.querySelector('.add-comment').firstElementChild.value = '';
+		box.appendChild(commentBox);
+	}
+
+	static loadMoreButton(number) {
+
+		let loadMoreButton = document.getElementById('load-more');
+		if (number > 0) {
+			loadMoreButton.hidden = false;
+		} else {
+			loadMoreButton.hidden = true;
+		}
+	}
 }

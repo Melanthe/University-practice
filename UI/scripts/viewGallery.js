@@ -78,6 +78,14 @@ class ViewGallery {
 		});
 	}
 
+	_fillComments(item, box) {
+
+		let commentsBox = box.querySelector('.comments');
+		item.comments.forEach(function (comment) {
+			ViewElements.comment(comment.author, comment.text, commentsBox);
+		});
+	}
+
 	_createPopupBox(item, container, userName) {
 
 		let popupBox = document.createElement('div');
@@ -101,7 +109,7 @@ class ViewGallery {
 			</div>
 			<div class='hashtags'></div>
 			<div class='comments'></div>
-			<form class='add-comment'><textarea placeholder='Comment this photo...' maxlength='200' rows='2'></textarea></form>
+			<form class='add-comment'><input placeholder='Comment this photo...' maxlength='100'></form>
 			<div class='like' data-status='0'>
 				<span class='numOfLikes'>${item.likes}</span>
 				<button class='heart'>
@@ -111,6 +119,10 @@ class ViewGallery {
 			<i class="fas fa-trash-alt delete"></i>
 		</div>`;
 		this._fillHashtags(item, popupBox);
+		this._fillComments(item, popupBox);
+		if (!userName) {
+			popupBox.querySelector('.add-comment').hidden = true;
+		}
 		if ((userName !== '') && (item.ifLiked(userName))) {
 			let like = popupBox.querySelector('.like');
 			like.dataset.status = '1';

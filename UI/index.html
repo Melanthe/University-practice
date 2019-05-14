@@ -5,16 +5,16 @@
 <body>
 
     <head>
-        <link rel='stylesheet' href='../../../../UI/styles/mainStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/headerStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/photoStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/popupStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/mainButtonStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/footerStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/formStyles.css'>
-        <link rel='stylesheet' href='../../../../UI/styles/media.css'>
+        <link rel='stylesheet' href='styles/mainStyles.css'>
+        <link rel='stylesheet' href='styles/headerStyles.css'>
+        <link rel='stylesheet' href='styles/photoStyles.css'>
+        <link rel='stylesheet' href='styles/popupStyles.css'>
+        <link rel='stylesheet' href='styles/mainButtonStyles.css'>
+        <link rel='stylesheet' href='styles/footerStyles.css'>
+        <link rel='stylesheet' href='styles/formStyles.css'>
+        <link rel='stylesheet' href='styles/media.css'>
 
-        <link href='../../../../UI/fonts/fonts.css' rel='stylesheet'>
+        <link href='fonts/fonts.css' rel='stylesheet'>
         <script defer src='https://use.fontawesome.com/releases/v5.7.2/js/all.js'
             integrity='sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP'
             crossorigin='anonymous'></script>
@@ -36,8 +36,8 @@
             <div id='filter'>
                 <button id='filter-button' data-status='0'></button>
                 <div id='filter-fields' style='display: none'>
-                    <div id='author-filter'><img src='../../../../UI/styles/icons/filter_author.png'></div>
-                    <div id='hashtag-filter'><img src='../../../../UI/styles/icons/filter_hashtag.png'></div>
+                    <div id='author-filter'><img src='styles/icons/filter_author.png'></div>
+                    <div id='hashtag-filter'><img src='styles/icons/filter_hashtag.png'></div>
                 </div>
                 <div id="filters-container" style='display: none'>
                     <div id="author-filters" data-count='0'></div>
@@ -50,7 +50,7 @@
         <div id='add-photo' hidden>
             <form id='add-form' name='add-photo'>
                 <div id='add-photo-box'>
-                    <div id='drop-pic-box'><img src='../../../../UI/styles/icons/drag_and_drop.png'></div>
+                    <div id='drop-pic-box'><img src='styles/icons/drag_and_drop.png'></div>
                     <label for='input-photo' id='input-photo-label'>CHOOSE PHOTO</label>
                     <input id='input-photo' type='file'>
 
@@ -71,7 +71,10 @@
         <div id='search' data-status='' hidden>
             <div id='search-box'>
                 <span id='search-title'></span>
-                <form id='search-form'><input id='search-input-box' autocomplete="off" required></form>
+                <form id='search-form'>
+                    <input id='search-input-box' autocomplete="off" required>
+                    <button form='search-form' type='submit' id='search-form-ready'>OK</button>
+                </form>
                 <i id='close-search' class='far fa-times-circle close'></i>
                 <div id="search-error"></div>
             </div>
@@ -111,20 +114,20 @@
         </div>
     </footer>
 
-    <script src='../../../../UI/scripts/photo.js'></script>
-    <script src='../../../../UI/scripts/post.js'></script>
-    <script src='../../../../UI/scripts/filter.js'></script>
-    <script src='../../../../UI/scripts/postList.js'></script>
-    <script src='../../../../UI/scripts/user.js'></script>
-    <script src='../../../../UI/scripts/usersBase.js'></script>
-    <script src='../../../../UI/scripts/storage.js'></script>
-    <script src='../../../../UI/scripts/viewGallery.js'></script>
-    <script src='../../../../UI/scripts/viewHeader.js'></script>
-    <script src='../../../../UI/scripts/viewElements.js'></script>
-    <script src='../../../../UI/scripts/onClick.js'></script>
-    <script src='../../../../UI/scripts/onSubmit.js'></script>
-    <script src='../../../../UI/scripts/loadedEvent.js'></script>
-    <script src='../../../../UI/scripts/controller.js'></script>
+    <script src='scripts/photo.js'></script>
+    <script src='scripts/post.js'></script>
+    <script src='scripts/filter.js'></script>
+    <script src='scripts/postList.js'></script>
+    <script src='scripts/user.js'></script>
+    <script src='scripts/usersBase.js'></script>
+    <script src='scripts/storage.js'></script>
+    <script src='scripts/viewElements.js'></script>
+    <script src='scripts/viewGallery.js'></script>
+    <script src='scripts/viewHeader.js'></script>
+    <script src='scripts/onClick.js'></script>
+    <script src='scripts/onSubmit.js'></script>
+    <script src='scripts/loadedEvent.js'></script>
+    <script src='scripts/controller.js'></script>
 </body>
 
 </html>

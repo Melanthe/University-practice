@@ -226,7 +226,7 @@
     background: rgba(112, 193, 179, 0.4);
     border: 1.5px solid #115470;
     left: 16%;
-    bottom: 20%;
+    bottom: 30%;
     height: 10%;
     width: 65%;
     resize: none;
@@ -242,8 +242,44 @@
     box-shadow: 0px 0px 10px #FFE066;
 }
 
+#search-form-ready {
+    position: absolute;
+    cursor: pointer;
+    bottom: 4%;
+    left: 45.5%;
+    height: 3vw;
+    width: 3vw;
+    background: #FFE066;
+    font-family: 'Amatic SC';
+    font-size: 2vw;
+    color: #115470;
+    border-radius: 100%;
+    outline: none;
+    border: none;
+}
+
+#search-form-ready:hover {
+    box-shadow: 2px 2px 5px #3d3d3d;
+}
+
+#search-form-ready:active {
+    box-shadow: inset 2px 2px 5px #3d3d3d;
+}
+
+#search-error {
+    position: absolute;
+    text-align: right;
+    width: 40%;
+    bottom: 2%;
+    right: 2%;
+    color: #FFE066;
+    font-family: 'Amatic SC';
+    font-size: 1.8vw;
+}
+
 #close-search {
     position: absolute;
+    cursor: pointer;
     width: 10%;
     height: 15%;
     right: 0;
@@ -336,14 +372,6 @@
     box-shadow: 0px 8px 10px #247ba0;
 }
 
-#close-sign-form {
-    position: absolute;
-    top: 1%;
-    right: 1%;
-    height: 5%;
-    width: 5%;
-}
-
 #sign-form .help {
     bottom: 10%;
     height: 7vw;
@@ -360,14 +388,12 @@
     font-size: 2vw;
 }
 
-#search-error {
+#close-sign-form {
     position: absolute;
-    text-align: center;
-    width: 100%;
-    bottom: 2%;
-    color: #FFE066;
-    font-family: 'Amatic SC';
-    font-size: 1.8vw;
+    top: 1%;
+    right: 1%;
+    height: 5%;
+    width: 5%;
 }
 
 .edit-pic {

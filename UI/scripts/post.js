@@ -16,7 +16,9 @@ function isStringArray(array) {
 
 class Post {
 
-	constructor(photo = new Photo(), description = '', hashtags = [], date = new Date(), liked = [], id = -1, likes = liked.length) {
+	constructor(photo = new Photo(), description = '', 
+		hashtags = [], date = new Date(), liked = [], id = -1, likes = liked.length, comments = []) {
+
 		this.photo = photo;
 		this.description = description;
 		this.id = id;
@@ -24,6 +26,7 @@ class Post {
 		this.liked = liked;
 		this.hashtags = hashtags;
 		this.likes = likes;
+		this.comments = comments;
 	}
 
 	static parseToPost(object) {
@@ -35,7 +38,8 @@ class Post {
 			new Date(Date.parse(object.date)),
 			object.liked,
 			object.id,
-			object.likes
+			object.likes,
+			object.comments
 		);
 	}
 

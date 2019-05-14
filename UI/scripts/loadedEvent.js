@@ -20,4 +20,8 @@ class LoadedEvents {
 			ViewHeader.activeUser(user);
 		}
 	}
+
+	static loadMoreButton(number) {	
+		ViewElements.loadMoreButton(number);
+	}
 }

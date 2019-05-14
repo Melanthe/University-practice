@@ -52,6 +52,7 @@ class OnClick {
 
 	static exitPopup(popup, shadow) {
 		shadow.hidden = true;
+		popup.querySelector('.add-comment').firstElementChild.value = '';
 		popup.style.display = 'none';
 	}
 
@@ -188,5 +189,6 @@ class OnClick {
 			viewer.showPost(post);
 			viewer.incrementShown();
 		});
+		ViewElements.loadMoreButton(gallery.numberOfPosts - viewer.numberOfShown);
 	}
 }

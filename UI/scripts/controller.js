@@ -15,7 +15,7 @@
 
 				OnClick.photoLike(targetNode.closest('.like'), item);
 				item.likedPost(user.userName);
-				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts, currentFilter));
+				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts, currentFilter));
 			}
 		}
 	}
@@ -36,7 +36,7 @@
 
 				OnClick.popupLike(event.target.closest('.like'), item, photo.querySelector('.like'));
 				item.likedPost(user.userName);
-				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
+				Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts));
 			}
 		}
 	}
@@ -59,7 +59,7 @@
 		}
 	}
 
-	function showPosts(skip = 0, amount = gallery.numOfPosts) {
+	function showPosts(skip = 0, amount = gallery.numberOfPosts) {
 		const postList = gallery.getPhotoPosts(skip, amount, currentFilter);
 		galleryViewer.showPhotoPosts(postList, user.userName);
 	}
@@ -124,7 +124,40 @@
 	function searchFormsEvents(event) {
 		if (OnSubmit.submitSearchForm(event, currentFilter, galleryViewer, photoContainer, popupContainer)) {
 			showPosts(0, 15);
+			ViewElements.loadMoreButton(gallery.getNumberOfFilter(galleryViewer.numberOfShown, currentFilter));
 			OnClick.closeSearchForm();
+		}
+	}
+
+	function inputHashtagEvent(event) {
+		if (event.target.classList.contains('add-hashtag-input')) {
+			if (event.keyCode === 13) {
+				const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
+				OnClick.addHashtag(event, container);
+			}
+		}
+	}
+
+	function inputCommentEvent(event) {
+
+		if (event.target.parentNode.classList.contains('add-comment')) {
+			if (event.keyCode === 13) {
+				OnSubmit.submitCommentAddition(event, gallery, user.userName, event.target.value);
+			}
+		}
+	}
+
+	function hashtagButtonEvent(event) {
+
+		const targetNode = event.target;
+		const parent = targetNode.parentNode;
+
+		if (targetNode.classList.contains('hashtag-button-font') || parent.classList.contains('hashtag-button-font')) {
+			const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
+			OnClick.addHashtag(event, container);
+		}
+		if (targetNode.classList.contains('tag-minus') || parent.classList.contains('tag-minus')) {
+			OnClick.removeTagBubble(targetNode);
 		}
 	}
 
@@ -136,6 +169,7 @@
 			photoContainer.innerHTML = '';
 			popupContainer.innerHTML = '';
 			showPosts(0, 15);
+			ViewElements.loadMoreButton(gallery.getNumberOfFilter(galleryViewer.numberOfShown, currentFilter));
 		}
 	}
 
@@ -171,29 +205,6 @@
 		imgBox.src = filePath;
 	}
 
-	function inputHashtagEvent(event) {
-		if (event.target.classList.contains('add-hashtag-input')) {
-			if (event.keyCode === 13) {
-				const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
-				OnClick.addHashtag(event, container);
-			}
-		}
-	}
-
-	function hashtagButtonEvent(event) {
-
-		const targetNode = event.target;
-		const parent = targetNode.parentNode;
-
-		if (targetNode.classList.contains('hashtag-button-font') || parent.classList.contains('hashtag-button-font')) {
-			const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
-			OnClick.addHashtag(event, container);
-		}
-		if (targetNode.classList.contains('tag-minus') || parent.classList.contains('tag-minus')) {
-			OnClick.removeTagBubble(targetNode);
-		}
-	}
-
 	function addSubmitClick(event) {
 		if (event.target.classList.contains('fa-check') || event.target.parentNode.classList.contains('fa-check')) {
 			OnSubmit.submitAddForm(addPhotoForm, user, gallery);
@@ -203,7 +214,7 @@
 	function deletePhotoEvent(event) {
 		if (event.target.classList.contains('delete') || event.target.parentNode.classList.contains('delete')) {
 			OnClick.deletePhoto(event.target.closest('.popup-box'), popupContainer, gallery);
-			Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
+			Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts));
 			location.reload();
 		}
 	}
@@ -232,6 +243,10 @@
 		}
 	}
 
+	function showLoadMoreButton() {
+		LoadedEvents.loadMoreButton(gallery.numberOfPosts - galleryViewer.numberOfShown);
+	}
+
 	function bind() {
 
 		const dropBox = document.getElementById('drop-pic-box');
@@ -244,8 +259,10 @@
 		popupContainer.addEventListener('click', deletePhotoEvent);
 		popupContainer.addEventListener('click', closePhotoEditing);
 		popupContainer.addEventListener('click', submitPhotoEditing);
+		popupContainer.addEventListener('keydown', inputCommentEvent);
 
 		document.addEventListener('DOMContentLoaded', userEvents);
+		document.addEventListener('DOMContentLoaded', showLoadMoreButton);
 		document.addEventListener('click', closeFormsEvents);
 		document.addEventListener('click', sideBarEvents);
 		document.addEventListener('click', openFormsEvents);
@@ -259,6 +276,7 @@
 		document.addEventListener('change', choosePhotoEvents);
 		document.getElementById('sign').addEventListener('submit', signFormsEvents);
 		document.getElementById('search').addEventListener('submit', searchFormsEvents);
+		document.getElementById('search-form-ready').addEventListener('click', searchFormsEvents);
 
 		dropBox.addEventListener('dragenter', dragEvent);
 		dropBox.addEventListener('dragover', dragEvent);
@@ -275,7 +293,7 @@
 	const usersBase = new UsersBase(Storage.getUsersBase());
 	const user = Storage.getUser();
 
-	if (gallery.numOfPosts === 0) {
+	if (gallery.numberOfPosts === 0) {
 		gallery.addPhotoPost(new Post(new Photo('img/1.jpg', 'yana'), 'Look! Omg! He is licking thi water so cool! I just can\'t! Ahhhhhhh', ['animals', 'cute'], new Date(), undefined, 54));
 		gallery.addPhotoPost(new Post(new Photo('img/2.jpg', 'vova'), '', [], new Date(), ['yana']));
 		gallery.addPhotoPost(new Post(new Photo('img/3.jpg', 'kolya'), 'sea', [], new Date()));
@@ -289,7 +307,7 @@
 		gallery.addPhotoPost(new Post(new Photo('img/11.jpg', 'dasha'), 'tree', [], new Date()));
 		gallery.addPhotoPost(new Post(new Photo('img/12.jpg', 'yana'), '', [], new Date()));
 		gallery.addPhotoPost(new Post(new Photo('img/13.jpg', 'kirill'), '', [], new Date()));
-	}
+	}		
 
 	bind();
 	showPosts(0, 15);

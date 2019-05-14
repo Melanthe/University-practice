@@ -85,7 +85,7 @@ class OnSubmit {
 		let new_photo = new Photo(photoPath, user.userName);
 		let new_post = new Post(new_photo, description, hashtags, new Date());
 		gallery.addPhotoPost(new_post);
-		Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
+		Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts));
 		location.reload();
 	}
 
@@ -110,7 +110,24 @@ class OnSubmit {
 
 		gallery.editPhotoPost(id, item);
 		box.remove();
-		Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numOfPosts));
+		Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts));
 		location.reload();
+	}
+
+	static submitCommentAddition(event, gallery, author, text) {
+
+		const photoContainer = document.getElementById('photos');
+		const popupContainer = document.getElementById('popup-photos');
+
+		event.preventDefault();
+
+		let popupBox = event.path[3];
+		const index = Array.prototype.indexOf.call(popupContainer.children, popupBox);
+		const id = +photoContainer.children[index].id;
+		let item = gallery.getPhotoPost(id);
+		item.comments.push({author: author, text: text});
+
+		ViewElements.comment(author, text, event.path[2].querySelector('.comments'));
+		Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts));
 	}
 }
