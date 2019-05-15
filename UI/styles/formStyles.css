@@ -84,10 +84,9 @@
 #add-photo .close {
     position: absolute;
     cursor: pointer;
-    top: 1%;
+    top: 2%;
     right: 2%;
-    height: 5%;
-    width: 3%;
+    font-size: 1.7vw;
     color: #50514F;
 }
 
@@ -280,9 +279,8 @@
 #close-search {
     position: absolute;
     cursor: pointer;
-    width: 10%;
-    height: 15%;
-    right: 0;
+    font-size: 1.7vw;
+    right: 2%;
     top: 5%;
 }
 
@@ -390,10 +388,9 @@
 
 #close-sign-form {
     position: absolute;
-    top: 1%;
-    right: 1%;
-    height: 5%;
-    width: 5%;
+    top: 2%;
+    right: 2%;
+    font-size: 1.7vw; 
 }
 
 .edit-pic {

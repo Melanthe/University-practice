@@ -6,7 +6,7 @@
 
 		const targetNode = event.target;
 
-		if (targetNode.tagName === 'path') {
+		if (targetNode.classList.contains('like-button')) {
 			if (user.userName !== '') {
 
 				const post = targetNode.closest('.photo');
@@ -23,9 +23,8 @@
 	function popupLike(event) {
 
 		const targetNode = event.target;
-		const parent = targetNode.parentNode;
 
-		if (targetNode.classList.contains('like-button') || parent.classList.contains('like-button')) {
+		if (targetNode.classList.contains('like-button')) {
 			if (user.userName !== '') {
 
 				const popup = targetNode.closest('.popup-box');
@@ -54,7 +53,7 @@
 	}
 
 	function exitPopup(event) {
-		if (event.target.classList.contains('close') || event.target.parentNode.classList.contains('close')) {
+		if (event.target.classList.contains('close')) {
 			OnClick.exitPopup(event.target.closest('.popup-box'), event.target.closest('#popup-photos'));
 		}
 	}
@@ -108,15 +107,14 @@
 	function closeFormsEvents(event) {
 
 		const targetNode = event.target;
-		const parent = targetNode.parentNode;
 
-		if (targetNode.id === 'close-add-form' || parent.id === 'close-add-form') {
+		if (targetNode.id === 'close-add-form') {
 			OnClick.closeAddForm(addPhotoForm);
 		}
-		if (targetNode.id === 'close-search' || parent.id === 'close-search') {
+		if (targetNode.id === 'close-search') {
 			OnClick.closeSearchForm();
 		}
-		if (targetNode.id === 'close-sign-form' || parent.id === 'close-sign-form') {
+		if (targetNode.id === 'close-sign-form') {
 			OnClick.closeSignForm();
 		}
 	}
@@ -150,19 +148,18 @@
 	function hashtagButtonEvent(event) {
 
 		const targetNode = event.target;
-		const parent = targetNode.parentNode;
 
-		if (targetNode.classList.contains('hashtag-button-font') || parent.classList.contains('hashtag-button-font')) {
+		if (targetNode.classList.contains('hashtag-button-font')) {
 			const container = (event.target.closest('.hashtag-box').dataset.status === '1') ? event.target.closest('.popup-box') : addPhotoForm;
 			OnClick.addHashtag(event, container);
 		}
-		if (targetNode.classList.contains('tag-minus') || parent.classList.contains('tag-minus')) {
+		if (targetNode.classList.contains('tag-minus')) {
 			OnClick.removeTagBubble(targetNode);
 		}
 	}
 
 	function removeFilter(event) {
-		if (event.target.classList.contains('filter-minus') || event.target.parentNode.classList.contains('filter-minus')) {
+		if (event.target.classList.contains('filter-minus')) {
 			OnClick.removeFilterBubble(event.target, currentFilter);
 			galleryViewer.setFilter(currentFilter);
 			galleryViewer.refreshShown();
@@ -206,13 +203,13 @@
 	}
 
 	function addSubmitClick(event) {
-		if (event.target.classList.contains('fa-check') || event.target.parentNode.classList.contains('fa-check')) {
+		if (event.target.classList.contains('fa-check')) {
 			OnSubmit.submitAddForm(addPhotoForm, user, gallery);
 		}
 	}
 
 	function deletePhotoEvent(event) {
-		if (event.target.classList.contains('delete') || event.target.parentNode.classList.contains('delete')) {
+		if (event.target.classList.contains('delete')) {
 			OnClick.deletePhoto(event.target.closest('.popup-box'), popupContainer, gallery);
 			Storage.updatePostsList(gallery.getPhotoPosts(0, gallery.numberOfPosts));
 			location.reload();
@@ -220,19 +217,19 @@
 	}
 
 	function viewPhotoEditing(event) {
-		if (event.target.classList.contains('edit') || event.target.parentNode.classList.contains('edit')) {
+		if (event.target.classList.contains('edit')) {
 			ViewElements.editPhoto(event.target.closest('.popup-box'), gallery, galleryViewer);
 		}
 	}
 
 	function closePhotoEditing(event) {
-		if (event.target.id === 'close-edit' || event.target.parentNode.id === 'close-edit') {
+		if (event.target.id === 'close-edit') {
 			OnClick.closePhotoEditing(event.target.closest('.popup-box'));
 		}
 	}
 
 	function submitPhotoEditing(event) {
-		if (event.target.classList.contains('fa-check') || event.target.parentNode.classList.contains('fa-check')) {
+		if (event.target.classList.contains('fa-check')) {
 			OnSubmit.submitPhotoEdition(event.target.closest('.popup-box'), gallery);
 		}
 	}

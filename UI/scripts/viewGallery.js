@@ -41,7 +41,7 @@ class ViewGallery {
 			<span class='author'>${item.photo.author}</span>
 			<div class='like' data-status='0'>
 				<span class='numOfLikes'>${item.likes}</span>
-				<button class='heart'><i class='fas fa-heart'></i></button>
+				<button class='heart'><i class='fas fa-heart like-button'></i></button>
 			</div>
 		</div>`;
 		if ((userName !== '') && (item.ifLiked(userName))) {
