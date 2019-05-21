@@ -1,0 +1,1 @@
+select * from Posts where date(Creation_date) = date('2019-05-01');
