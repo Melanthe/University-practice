@@ -1,0 +1,1 @@
+select * from Posts where User_id = 2 and Description like '%hello%';
